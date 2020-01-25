@@ -3,6 +3,7 @@ import styled from "styled-components/macro"
 
 import Helmet from "components/Helmet"
 import Carousel from "components/Carousel"
+import clients from "assets/clients"
 
 const Container = styled.div`
   height: 100%;
@@ -17,7 +18,7 @@ export default function View(props) {
   return (
     <Container>
       <Helmet title="Home" />
-      <Carousel />
+      <Carousel data={clients} />
     </Container>
   )
 }
