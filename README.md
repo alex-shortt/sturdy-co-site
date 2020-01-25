@@ -1,5 +1,5 @@
-# react-boilerplate
-Boilerplate for new React 16.8 Projects
+# sturdy-co-site
+Site for Sturdy-co
 
 ## Setup
 
