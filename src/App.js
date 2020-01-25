@@ -7,6 +7,8 @@ import FullScreenLoading from "components/FullScreenLoading"
 import ScrollToTop from "components/ScrollToTop"
 import GA from "services/ga"
 
+import Nav from "./components/Nav"
+
 const View = React.lazy(() => import("scenes/View"))
 
 const GoogleAnalytics = () => {
@@ -22,6 +24,7 @@ export default function App() {
       <React.Suspense fallback={<FullScreenLoading />}>
         <Router>
           <GoogleAnalytics />
+          <Nav />
           <ScrollToTop>
             <Switch>
               <Route path="/" component={View} />

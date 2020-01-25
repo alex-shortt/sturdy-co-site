@@ -6,7 +6,6 @@ export default function View(props) {
   return (
     <>
       <Helmet title="View" />
-      Sturdy.co
     </>
   )
 }
