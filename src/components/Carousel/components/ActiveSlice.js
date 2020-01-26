@@ -26,6 +26,7 @@ const Content = styled.div`
   font-weight: bold;
   text-align: center;
   position: relative;
+  text-transform: uppercase;
 
   //&::before {
   //  pointer-events: none;

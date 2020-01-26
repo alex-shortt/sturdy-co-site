@@ -3,7 +3,7 @@ import styled from "styled-components/macro"
 
 import Helmet from "components/Helmet"
 import Carousel from "components/Carousel"
-import clients from "assets/clients"
+import clients from "assets/data/clients"
 
 const Container = styled.div`
   height: 100%;
