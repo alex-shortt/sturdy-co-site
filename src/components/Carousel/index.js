@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components/macro"
+import { useGesture, withGesture, Gesture } from "react-with-gesture"
 
 import Slice from "./components/Slice"
 
@@ -19,6 +20,7 @@ export default function Carousel(props) {
 
   const [dims, setDims] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
+  const [hue, setHue] = useState(Math.random() * 360)
   const containerRef = useRef()
 
   useEffect(() => {
@@ -41,6 +43,7 @@ export default function Carousel(props) {
           item={{ ...item, i }}
           parentDims={dims || getSlicesDims()}
           data={data}
+          hue={hue}
           activeIndex={activeIndex}
         />
       ))}
@@ -49,7 +52,7 @@ export default function Carousel(props) {
 }
 
 const getSlicesDims = () => {
-  const ratio = 7 / 16
+  const ratio = 5 / 16
   const width = Math.min(window.innerWidth * 0.7, 900)
   return { width, height: width * ratio }
 }
