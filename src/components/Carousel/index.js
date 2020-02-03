@@ -11,7 +11,7 @@ const Container = styled.div`
   align-items: center;
   position: relative;
   transform-style: preserve-3d;
-  perspective: 2000px;
+  perspective: 1100px;
   //transform: rotateX(-60deg);
 `
 

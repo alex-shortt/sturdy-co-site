@@ -1,6 +1,5 @@
 import React from "react"
 import styled from "styled-components/macro"
-import { useSpring, animated } from "react-spring"
 
 const Wrapper = styled.div`
   height: 100%;
@@ -12,6 +11,12 @@ const Wrapper = styled.div`
   overflow: hidden;
   pointer-events: none;
   transition: ease-out 300ms;
+`
+
+const Container = styled.div`
+  width: 100%;
+  height: 100%;
+  transition: all linear 300ms;
 `
 
 const Content = styled.div`
@@ -58,90 +63,87 @@ export default function ActiveSlice(props) {
   const pos = i / (data.length - 1)
   const activePos = activeIndex / (data.length - 1)
 
+  // positioning / sizing
   const wrapperStyle = {
     width: WIDTH / data.length,
     height: HEIGHT,
-    background: `hsl(${hue}, 100%, ${pos * 60 + 25}%)`,
     transform: [
       "translateY(-50%)",
       `translateX(-${pos * 100}%)`,
-      "scale(1.02)",
-      "translateZ(-50px)"
+      "scale(1.03)"
     ],
     filter: []
   }
 
+  // styling
+  const containerStyle = {
+    background: `hsl(${hue}, 100%, ${pos * 60 + 25}%)`,
+    filter: []
+  }
+
+  const MAX_DEPTH = 300
+  const THETA = 45 // 0-90 in deg
+
   const dist = Math.abs(activeIndex - i)
   const maxDist = Math.floor(data.length * 0.6)
 
-  // 2n / (x + n) - 1
-  // nonlinear interpolation from 0 to 1, given dist
+  // 2n / (x + n) - 1 -- nonlinear interpolation from 0 to 1, given dist
   const ease = Math.max((2 * maxDist) / (dist + maxDist) - 1, 0)
 
-  // -x/n + 1
-  // linear interpolation from 0 to 1, given dist
+  // -x/n + 1 -- linear interpolation from 0 to 1, given dist
   const linear = -dist / maxDist + 1
-  const linearCapped = Math.max(-dist / maxDist + 1, 0)
-
-  const maxDepth = 300
 
   if (active) {
     // this one is active
-    wrapperStyle.transform.push(`translateZ(${maxDepth + 10}px)`)
-    wrapperStyle.width = HEIGHT * 1.1 + HEIGHT * 0.1
-    wrapperStyle.height = HEIGHT * 1.1 + HEIGHT * 0.1
-    wrapperStyle.filter.push("grayscale(0)")
-    wrapperStyle.filter.push("blur(0px)")
+    wrapperStyle.transform.push(`translateZ(${MAX_DEPTH + 20}px)`)
+    wrapperStyle.width = HEIGHT * 1.1
+    wrapperStyle.height = HEIGHT * 1.1
+    containerStyle.filter.push("grayscale(0)")
+    containerStyle.filter.push("blur(0px)")
   } else if (activeIndex !== null) {
     // another one is active
 
-    const theta = 50 // 0-90 deg
-
     // line up slices for when it rotates
-    const wPrime = wrapperStyle.width * Math.cos((theta * Math.PI) / 180)
+    const wPrime = wrapperStyle.width * Math.cos((THETA * Math.PI) / 180)
     const space = wrapperStyle.width - wPrime
     const shift = (i < activeIndex ? 1 : -1) * space * dist
-    wrapperStyle.transform.push(`translateX(${shift * 1.05}px)`)
-
-    // wrapperStyle.transform.push(
-    //   `translateX(${((i < activeIndex ? 1 : -1) * HEIGHT) / 2}px)`
-    // )
+    wrapperStyle.transform.push(`translateX(${shift * 1.08}px)`)
 
     // line up first slice with middle of active slice
     wrapperStyle.transform.push(`translateX(${(activePos - 0.5) * -HEIGHT}px)`)
 
-    // push to edges of active slice
+    // push to edges of active slice, do it less for the outer ones
     wrapperStyle.transform.push(
       `translateX(${(HEIGHT / 2) *
-        (0.9 - Math.abs(activePos - 0.5)) *
+        (0.8 - Math.abs(activePos - 0.5)) *
         (i < activeIndex ? -1 : 1)}px)`
     )
 
     // move in 3d
-    wrapperStyle.transform.push(`translateZ(${maxDepth * linear}px)`)
+    wrapperStyle.transform.push(`translateZ(${MAX_DEPTH * linear}px)`)
 
     // rotate
     wrapperStyle.transform.push(
-      `rotateY(${theta * (i < activeIndex ? -1 : 1)}deg)`
+      `rotateY(${THETA * (i < activeIndex ? -1 : 1)}deg)`
     )
 
     // effects
-    wrapperStyle.filter.push(`blur(${2 * (1 - linearCapped)}px)`)
-    wrapperStyle.filter.push(`grayscale(${1 - linearCapped})`)
-
-    wrapperStyle.transition = `ease-out ${(1 - ease) * 200 + 300}ms`
+    containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
+    containerStyle.filter.push(`grayscale(${1 - linear})`)
+    wrapperStyle.transition = `ease-out ${(1 - ease) * 200 + 200}ms`
   } else {
-    wrapperStyle.filter.push("grayscale(1)")
+    containerStyle.filter.push("grayscale(1)")
   }
 
   wrapperStyle.transform = wrapperStyle.transform.join(" ")
   wrapperStyle.filter = wrapperStyle.filter.join(" ")
-
-  // const anim = useSpring(wrapperDims)
+  containerStyle.filter = containerStyle.filter.join(" ")
 
   return (
-    <Wrapper as={animated.div} style={wrapperStyle} pos={pos}>
-      <Content active={active}>{children}</Content>
+    <Wrapper style={wrapperStyle} pos={pos}>
+      <Container style={containerStyle}>
+        <Content active={active}>{children}</Content>
+      </Container>
     </Wrapper>
   )
 }
