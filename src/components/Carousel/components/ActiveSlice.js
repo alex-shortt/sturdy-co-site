@@ -56,6 +56,7 @@ export default function ActiveSlice(props) {
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
+  const activePos = activeIndex / (data.length - 1)
 
   const wrapperStyle = {
     width: WIDTH / data.length,
@@ -79,24 +80,40 @@ export default function ActiveSlice(props) {
 
   // -x/n + 1
   // linear interpolation from 0 to 1, given dist
-  const linear = Math.max(-dist / maxDist + 1, 0)
+  const linear = -dist / maxDist + 1
+  const linearCapped = Math.max(-dist / maxDist + 1, 0)
+
+  const maxDepth = 240
 
   if (active) {
     // this one is active
-    wrapperStyle.transform.push("translateZ(200px)")
+    wrapperStyle.transform.push(`translateZ(${maxDepth + 20}px)`)
     wrapperStyle.width = HEIGHT * 1.1 + HEIGHT * 0.1
     wrapperStyle.height = HEIGHT * 1.1 + HEIGHT * 0.1
-    wrapperStyle.filter.push("blur(0px)")
     wrapperStyle.filter.push("grayscale(0)")
+    wrapperStyle.filter.push("blur(0px)")
   } else if (activeIndex !== null) {
     // another one is active
 
-    // wrapperStyle.width = HEIGHT * 1.1 + HEIGHT * 0.1
-    wrapperStyle.width += ease * HEIGHT * 0.05
-    wrapperStyle.transform.push(`translateZ(${200 * ease}px)`)
-    // wrapperStyle.transform.push(`scale(${1 + 0.15 * (1 - linear)})`)
-    wrapperStyle.filter.push(`blur(${1 - ease}px)`)
-    wrapperStyle.filter.push(`grayscale(${1 - ease})`)
+    const theta = 45 * (i < activeIndex ? -1 : 1) // deg
+
+    // width width rot
+    const wPrime = wrapperStyle.width * Math.cos((theta * Math.PI) / 180)
+    const space = wrapperStyle.width - wPrime
+    const shift = (i < activeIndex ? 1 : -1) * space * dist
+
+    wrapperStyle.transform.push(`translateX(${shift}px)`)
+    // wrapperStyle.transform.push(
+    //   `translateX(${((i < activeIndex ? 1 : -1) * HEIGHT) / 2}px)`
+    // )
+    wrapperStyle.transform.push(`translateZ(${maxDepth * linear}px)`)
+
+    wrapperStyle.transform.push(`rotateY(${theta}deg)`)
+
+    // effects
+    wrapperStyle.filter.push(`blur(${2 * (1 - linearCapped)}px)`)
+    wrapperStyle.filter.push(`grayscale(${1 - linearCapped})`)
+
     wrapperStyle.transition = `ease-out ${(1 - ease) * 200 + 300}ms`
   } else {
     wrapperStyle.filter.push("grayscale(1)")

@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components/macro"
-import { useGesture, withGesture, Gesture } from "react-with-gesture"
 
 import Slice from "./components/Slice"
 
@@ -13,6 +12,7 @@ const Container = styled.div`
   position: relative;
   transform-style: preserve-3d;
   perspective: 2000px;
+  transform: rotateX(-60deg);
 `
 
 export default function Carousel(props) {
