@@ -83,11 +83,11 @@ export default function ActiveSlice(props) {
   const linear = -dist / maxDist + 1
   const linearCapped = Math.max(-dist / maxDist + 1, 0)
 
-  const maxDepth = 240
+  const maxDepth = 300
 
   if (active) {
     // this one is active
-    wrapperStyle.transform.push(`translateZ(${maxDepth + 20}px)`)
+    wrapperStyle.transform.push(`translateZ(${maxDepth + 10}px)`)
     wrapperStyle.width = HEIGHT * 1.1 + HEIGHT * 0.1
     wrapperStyle.height = HEIGHT * 1.1 + HEIGHT * 0.1
     wrapperStyle.filter.push("grayscale(0)")
@@ -95,20 +95,35 @@ export default function ActiveSlice(props) {
   } else if (activeIndex !== null) {
     // another one is active
 
-    const theta = 45 * (i < activeIndex ? -1 : 1) // deg
+    const theta = 50 // 0-90 deg
 
-    // width width rot
+    // line up slices for when it rotates
     const wPrime = wrapperStyle.width * Math.cos((theta * Math.PI) / 180)
     const space = wrapperStyle.width - wPrime
     const shift = (i < activeIndex ? 1 : -1) * space * dist
+    wrapperStyle.transform.push(`translateX(${shift * 1.05}px)`)
 
-    wrapperStyle.transform.push(`translateX(${shift}px)`)
     // wrapperStyle.transform.push(
     //   `translateX(${((i < activeIndex ? 1 : -1) * HEIGHT) / 2}px)`
     // )
+
+    // line up first slice with middle of active slice
+    wrapperStyle.transform.push(`translateX(${(activePos - 0.5) * -HEIGHT}px)`)
+
+    // push to edges of active slice
+    wrapperStyle.transform.push(
+      `translateX(${(HEIGHT / 2) *
+        (0.9 - Math.abs(activePos - 0.5)) *
+        (i < activeIndex ? -1 : 1)}px)`
+    )
+
+    // move in 3d
     wrapperStyle.transform.push(`translateZ(${maxDepth * linear}px)`)
 
-    wrapperStyle.transform.push(`rotateY(${theta}deg)`)
+    // rotate
+    wrapperStyle.transform.push(
+      `rotateY(${theta * (i < activeIndex ? -1 : 1)}deg)`
+    )
 
     // effects
     wrapperStyle.filter.push(`blur(${2 * (1 - linearCapped)}px)`)

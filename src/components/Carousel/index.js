@@ -12,7 +12,7 @@ const Container = styled.div`
   position: relative;
   transform-style: preserve-3d;
   perspective: 2000px;
-  transform: rotateX(-60deg);
+  //transform: rotateX(-60deg);
 `
 
 export default function Carousel(props) {
