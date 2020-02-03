@@ -10,6 +10,8 @@ import GA from "services/ga"
 import Nav from "./components/Nav"
 
 const View = React.lazy(() => import("scenes/View"))
+const About = React.lazy(() => import("scenes/About"))
+const Contact = React.lazy(() => import("scenes/Contact"))
 
 const GoogleAnalytics = () => {
   const { location } = useReactRouter()
@@ -27,8 +29,10 @@ export default function App() {
           <Nav />
           <ScrollToTop>
             <Switch>
-              <Route path="/" component={View} />
-              {/* TODO: 404 Page */}
+              <Route path="/" exact component={View} />
+              <Route path="/about" exact component={About} />
+              <Route path="/contact" exact component={Contact} />
+              <Route path="/:id" exact component={View} />
             </Switch>
           </ScrollToTop>
         </Router>

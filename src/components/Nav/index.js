@@ -4,7 +4,7 @@ import { Route, Link as LinkBase } from "react-router-dom"
 
 const Container = styled.div`
   position: absolute;
-  top: 40px;
+  top: 60px;
   left: 60px;
   background: black;
   z-index: 2;
@@ -20,6 +20,10 @@ const Link = styled(LinkBase)`
   text-decoration: none;
   position: relative;
   transition: color 150ms linear;
+
+  &:first-of-type {
+    margin-top: 0;
+  }
 
   &:hover {
     ${props => !props.match && "color: #acacac;"};
