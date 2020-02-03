@@ -7,6 +7,7 @@ const Container = styled.div`
   top: 40px;
   left: 60px;
   background: black;
+  z-index: 2;
 `
 
 const Link = styled(LinkBase)`
@@ -18,6 +19,11 @@ const Link = styled(LinkBase)`
   font-size: 1.25rem;
   text-decoration: none;
   position: relative;
+  transition: color 150ms linear;
+
+  &:hover {
+    ${props => !props.match && "color: #acacac;"};
+  }
 `
 
 const Indicator = styled.span`

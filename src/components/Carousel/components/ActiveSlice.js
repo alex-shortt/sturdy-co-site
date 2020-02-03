@@ -15,7 +15,7 @@ const Wrapper = styled.div`
 const Container = styled.div`
   width: 100%;
   height: 100%;
-  transition: all linear 300ms;
+  //transition: all linear 300ms;
 `
 
 const Content = styled.div`
@@ -127,7 +127,7 @@ export default function ActiveSlice(props) {
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
     containerStyle.filter.push(`grayscale(${1 - linear})`)
     wrapperStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
-    containerStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
+    // containerStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
   } else {
     containerStyle.filter.push("grayscale(1)")
   }

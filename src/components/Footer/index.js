@@ -8,7 +8,7 @@ const Container = styled.div`
   text-align: center;
 `
 
-const Tag = styled.h5`
+const Tag = styled.h4`
   line-height: 1.5em;
 `
 
@@ -54,7 +54,7 @@ export default function Footer(props) {
         EST. 2018
       </Tag>
       <Info>
-        <Anchor href="https://instagram.com/sturdyco" about="_blank">
+        <Anchor href="https://instagram.com/sturdy.co" about="_blank">
           <IG />
         </Anchor>
         <Spacer>|</Spacer>
