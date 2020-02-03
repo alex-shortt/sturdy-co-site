@@ -21,7 +21,7 @@ const Container = styled.div`
 const Content = styled.div`
   opacity: ${props => (props.active ? 1 : 0)};
   transition: ${props => (props.active ? "ease-out 300ms" : "ease-out 200ms")};
-  color: black;
+  color: white;
   width: 100%;
   height: 100%;
   display: flex;
@@ -76,7 +76,7 @@ export default function ActiveSlice(props) {
 
   // styling
   const containerStyle = {
-    background: `hsl(${hue}, 100%, ${pos * 60 + 25}%)`,
+    background: `hsl(${hue}, 100%, ${pos * 50 + 20}%)`,
     filter: []
   }
 

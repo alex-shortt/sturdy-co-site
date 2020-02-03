@@ -4,15 +4,12 @@ import styled from "styled-components/macro"
 import Slice from "./components/Slice"
 
 const Container = styled.div`
-  //background: red;
-  //border: 1px solid green;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
   transform-style: preserve-3d;
   perspective: 1100px;
-  //transform: rotateX(-60deg);
 `
 
 export default function Carousel(props) {

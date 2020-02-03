@@ -13,9 +13,9 @@ const Link = styled(LinkBase)`
   display: block;
   color: white;
   text-transform: uppercase;
-  ${props => props.match && "color: gray"};
-  margin: 0.25rem 0;
-  font-size: 1.75rem;
+  ${props => props.match && "color: #595959"};
+  margin: 1.1rem 0;
+  font-size: 1.25rem;
   text-decoration: none;
   position: relative;
 `
@@ -44,6 +44,7 @@ export default function Nav(props) {
     <Container>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/about">About</NavLink>
+      <NavLink to="/contact">Contact</NavLink>
     </Container>
   )
 }
