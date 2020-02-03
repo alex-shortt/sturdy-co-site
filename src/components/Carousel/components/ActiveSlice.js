@@ -10,6 +10,7 @@ const Wrapper = styled.div`
   position: absolute;
   pointer-events: none;
   transition: ease-out 300ms;
+  transform-style: preserve-3d;
 `
 
 const Container = styled.div`
@@ -125,7 +126,7 @@ export default function ActiveSlice(props) {
 
     // effects
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
-    containerStyle.filter.push(`grayscale(${1 - linear})`)
+    containerStyle.filter.push("grayscale(1)")
     wrapperStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
     // containerStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
   } else {
