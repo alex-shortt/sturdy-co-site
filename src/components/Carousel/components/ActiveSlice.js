@@ -8,7 +8,6 @@ const Wrapper = styled.div`
   left: ${props => props.pos * 100}%;
   transform: translateY(-50%);
   position: absolute;
-  overflow: hidden;
   pointer-events: none;
   transition: ease-out 300ms;
 `
@@ -87,9 +86,6 @@ export default function ActiveSlice(props) {
   const dist = Math.abs(activeIndex - i)
   const maxDist = Math.floor(data.length * 0.6)
 
-  // 2n / (x + n) - 1 -- nonlinear interpolation from 0 to 1, given dist
-  const ease = Math.max((2 * maxDist) / (dist + maxDist) - 1, 0)
-
   // -x/n + 1 -- linear interpolation from 0 to 1, given dist
   const linear = -dist / maxDist + 1
 
@@ -107,7 +103,7 @@ export default function ActiveSlice(props) {
     const wPrime = wrapperStyle.width * Math.cos((THETA * Math.PI) / 180)
     const space = wrapperStyle.width - wPrime
     const shift = (i < activeIndex ? 1 : -1) * space * dist
-    wrapperStyle.transform.push(`translateX(${shift * 1.08}px)`)
+    wrapperStyle.transform.push(`translateX(${shift * 1.08}px)`) // 1.08 to fill up holes
 
     // line up first slice with middle of active slice
     wrapperStyle.transform.push(`translateX(${(activePos - 0.5) * -HEIGHT}px)`)
@@ -130,7 +126,8 @@ export default function ActiveSlice(props) {
     // effects
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
     containerStyle.filter.push(`grayscale(${1 - linear})`)
-    wrapperStyle.transition = `ease-out ${(1 - ease) * 200 + 200}ms`
+    wrapperStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
+    containerStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
   } else {
     containerStyle.filter.push("grayscale(1)")
   }
