@@ -1,19 +1,16 @@
 import React from "react"
 import styled from "styled-components/macro"
+import { useSpring, animated } from "react-spring"
 
-const Wrapper = styled.div`
-  height: 100%;
-  width: 100%;
-  top: 50%;
-  left: ${props => props.pos * 100}%;
-  transform: translateY(-50%);
+const Wrapper = styled(animated.div)`
   position: absolute;
   pointer-events: none;
-  transition: ease-out 300ms;
   transform-style: preserve-3d;
+  top: 50%;
+  left: ${props => props.pos * 100}%;
 `
 
-const Container = styled.div`
+const Container = styled(animated.div)`
   width: 100%;
   height: 100%;
   //transition: all linear 300ms;
@@ -32,21 +29,6 @@ const Content = styled.div`
   text-align: center;
   position: relative;
   text-transform: uppercase;
-
-  //&::before {
-  //  pointer-events: none;
-  //  position: absolute;
-  //  content: "";
-  //  top: 99%;
-  //  left: 0%;
-  //  height: 60px;
-  //  width: 100%;
-  //  background: linear-gradient(
-  //    180deg,
-  //    rgba(255, 110, 202, 0.4) 0%,
-  //    transparent 80%
-  //  );
-  //}
 `
 
 export default function ActiveSlice(props) {
@@ -61,25 +43,55 @@ export default function ActiveSlice(props) {
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
-  const activePos = activeIndex / (data.length - 1)
 
-  // positioning / sizing
-  const wrapperStyle = {
-    width: WIDTH / data.length,
-    height: HEIGHT,
-    transform: [
-      "translateY(-50%)",
-      `translateX(-${pos * 100}%)`,
-      "scale(1.03)"
-    ],
-    filter: []
-  }
+  const [wrapperPos, setWrapperPos] = useSpring(() => ({
+    wh: [WIDTH / data.length, HEIGHT],
+    xryz: [0, 0, 0],
+    config: { mass: 3, tension: 550, friction: 60 }
+  }))
 
   // styling
   const containerStyle = {
     background: `hsl(${hue}, 100%, ${pos * 50 + 20}%)`,
     filter: []
   }
+
+  calcStyles(props, setWrapperPos, containerStyle)
+
+  // interpolate wrapper style
+  const wrapperStyle = {}
+  wrapperStyle.transform = wrapperPos.xryz.interpolate(
+    (x, ry, z) =>
+      "translateY(-50%)" +
+      `translateX(-${pos * 100}%)` +
+      "scale(1.03)" +
+      `translate3d(${x}px, 0, ${z}px)` +
+      `rotateY(${ry}deg)`
+  )
+  wrapperStyle.width = wrapperPos.wh.interpolate((w, h) => `${w}px`)
+  wrapperStyle.height = wrapperPos.wh.interpolate((w, h) => `${h}px`)
+
+  return (
+    <Wrapper style={wrapperStyle} pos={pos}>
+      <Container style={containerStyle}>
+        <Content active={active}>{children}</Content>
+      </Container>
+    </Wrapper>
+  )
+}
+
+const calcStyles = (props, setWrapperPos, containerStyle) => {
+  /*eslint-disable */
+
+  const {
+    data,
+    item: { i },
+    parentDims: { width: WIDTH, height: HEIGHT },
+    activeIndex
+  } = props
+
+  const active = activeIndex === i
+  const activePos = activeIndex / (data.length - 1)
 
   const MAX_DEPTH = 300
   const THETA = 45 // 0-90 in deg
@@ -90,58 +102,51 @@ export default function ActiveSlice(props) {
   // -x/n + 1 -- linear interpolation from 0 to 1, given dist
   const linear = -dist / maxDist + 1
 
+  const newWrapperPos = {
+    wh: [WIDTH / data.length, HEIGHT], //px
+    xryz: [0, 0, 0] // px deg px
+  }
+
   if (active) {
     // this one is active
-    wrapperStyle.transform.push(`translateZ(${MAX_DEPTH + 20}px)`)
-    wrapperStyle.width = HEIGHT * 1.1
-    wrapperStyle.height = HEIGHT * 1.1
+    newWrapperPos.xryz[2] = MAX_DEPTH + 40
+    newWrapperPos.wh = [HEIGHT * 1.1, HEIGHT * 1.1]
     containerStyle.filter.push("grayscale(0)")
     containerStyle.filter.push("blur(0px)")
   } else if (activeIndex !== null) {
     // another one is active
 
     // line up slices for when it rotates
-    const wPrime = wrapperStyle.width * Math.cos((THETA * Math.PI) / 180)
-    const space = wrapperStyle.width - wPrime
+    const wPrime = newWrapperPos.wh[0] * Math.cos((THETA * Math.PI) / 180)
+    const space = newWrapperPos.wh[0] - wPrime
     const shift = (i < activeIndex ? 1 : -1) * space * dist
-    wrapperStyle.transform.push(`translateX(${shift * 1.08}px)`) // 1.08 to fill up holes
+    newWrapperPos.xryz[0] += shift * 1.08 // 1.08 to fill up holes
 
     // line up first slice with middle of active slice
-    wrapperStyle.transform.push(`translateX(${(activePos - 0.5) * -HEIGHT}px)`)
+    newWrapperPos.xryz[0] += (activePos - 0.5) * -HEIGHT
 
     // push to edges of active slice, do it less for the outer ones
-    wrapperStyle.transform.push(
-      `translateX(${(HEIGHT / 2) *
-        (0.8 - Math.abs(activePos - 0.5)) *
-        (i < activeIndex ? -1 : 1)}px)`
-    )
+    newWrapperPos.xryz[0] +=
+      (HEIGHT / 2) *
+      (0.8 - Math.abs(activePos - 0.5)) *
+      (i < activeIndex ? -1 : 1)
 
     // move in 3d
-    wrapperStyle.transform.push(`translateZ(${MAX_DEPTH * linear}px)`)
+    newWrapperPos.xryz[2] = MAX_DEPTH * linear
 
     // rotate
-    wrapperStyle.transform.push(
-      `rotateY(${THETA * (i < activeIndex ? -1 : 1)}deg)`
-    )
+    newWrapperPos.xryz[1] = THETA * (i < activeIndex ? -1 : 1)
 
     // effects
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
     containerStyle.filter.push("grayscale(1)")
-    wrapperStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
-    // containerStyle.transition = `ease-out ${(1 - linear) * 200 + 200}ms`
   } else {
     containerStyle.filter.push("grayscale(1)")
   }
 
-  wrapperStyle.transform = wrapperStyle.transform.join(" ")
-  wrapperStyle.filter = wrapperStyle.filter.join(" ")
+  setWrapperPos(newWrapperPos)
+
   containerStyle.filter = containerStyle.filter.join(" ")
 
-  return (
-    <Wrapper style={wrapperStyle} pos={pos}>
-      <Container style={containerStyle}>
-        <Content active={active}>{children}</Content>
-      </Container>
-    </Wrapper>
-  )
+  /* eslint-enable */
 }
