@@ -14,7 +14,7 @@ const Wrapper = styled(animated.div)`
 const Container = styled(animated.div)`
   width: 100%;
   height: 100%;
-  //transition: all linear 300ms;
+  transition: background-color 350ms ease-out;
 `
 
 const Content = styled.div`
@@ -89,17 +89,13 @@ const calcWrapperPos = props => {
     activeIndex
   } = props
 
-  const active = activeIndex === i
-  const pos = i / (data.length - 1)
-  const activePos = activeIndex / (data.length - 1)
-
   const MAX_DEPTH = 300
   const THETA = 45 // 0-90 in deg
 
+  const active = activeIndex === i
+  const activePos = activeIndex / (data.length - 1)
   const dist = Math.abs(activeIndex - i)
   const maxDist = Math.floor(data.length * 0.6)
-
-  // -x/n + 1 -- linear interpolation from 0 to 1, given dist
   const linear = -dist / maxDist + 1
 
   const newWrapperPos = {
@@ -136,35 +132,31 @@ const calcWrapperPos = props => {
 const calcContainerStyle = props => {
   const {
     data,
-    item: { i },
-    activeIndex,
-    hue
+    item: { i, color },
+    activeIndex
   } = props
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
-
+  const grayscale = pos * 175 + 40
   const dist = Math.abs(activeIndex - i)
   const maxDist = Math.floor(data.length * 0.6)
-
-  // -x/n + 1 -- linear interpolation from 0 to 1, given dist
   const linear = -dist / maxDist + 1
 
   const containerStyle = {
-    background: `hsl(${hue}, 100%, ${pos * 50 + 20}%)`,
     filter: []
   }
 
   if (active) {
     // this one is active
-    containerStyle.filter.push("grayscale(0)")
+    containerStyle.backgroundColor = color
     containerStyle.filter.push("blur(0px)")
   } else if (activeIndex !== null) {
     // effects
+    containerStyle.backgroundColor = `rgb(${grayscale}, ${grayscale}, ${grayscale})`
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
-    containerStyle.filter.push("grayscale(1)")
   } else {
-    containerStyle.filter.push("grayscale(1)")
+    containerStyle.backgroundColor = `rgb(${grayscale}, ${grayscale}, ${grayscale})`
   }
 
   containerStyle.filter = containerStyle.filter.join(" ")

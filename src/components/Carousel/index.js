@@ -17,12 +17,12 @@ export default function Carousel(props) {
 
   const [dims, setDims] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
-  const [hue, setHue] = useState(Math.random() * 360)
   const containerRef = useRef()
 
   useEffect(() => {
     if (!dims) {
       setDims(getSlicesDims())
+      assignColors(data)
       window.addEventListener("resize", () => setDims(getSlicesDims()))
       window.addEventListener("mousemove", e => {
         if (!isDescendant(containerRef.current, e.target)) {
@@ -30,7 +30,7 @@ export default function Carousel(props) {
         }
       })
     }
-  }, [dims])
+  }, [data, dims])
 
   return (
     <Container style={dims} ref={containerRef}>
@@ -40,7 +40,6 @@ export default function Carousel(props) {
           item={{ ...item, i }}
           parentDims={dims || getSlicesDims()}
           data={data}
-          hue={hue}
           activeIndex={activeIndex}
         />
       ))}
@@ -63,4 +62,14 @@ const isDescendant = (parent, child) => {
     node = node.parentNode
   }
   return false
+}
+
+const assignColors = data => {
+  for (const card of data) {
+    const hue = Math.random() * 360
+    const sat = Math.random() * 20 + 80
+    const lit = Math.random() * 20 + 50
+
+    card.color = `hsl(${hue}, ${sat}%, ${lit}%)`
+  }
 }
