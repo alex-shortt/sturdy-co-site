@@ -9,8 +9,13 @@ import sturdyImg from "assets/images/logo.png"
 import Client from "components/Client"
 
 const Container = styled.div`
+  max-width: 1000px;
+  padding: 0 180px;
+  margin: 0 auto;
+
   height: 100%;
   width: 100%;
+  box-sizing: border-box;
   display: flex;
   flex-direction: column;
   justify-content: center;
