@@ -17,12 +17,11 @@ const Container = styled.div`
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`
-  height: calc(70px + 4vw);
+  height: calc(70px + 3vw);
   width: 100%;
   object-fit: contain;
   position: absolute;
-  top: calc(26% - 6.2vw);
-  transform: translateY(-50%);
+  top: 60px;
 `
 
 const Footer = styled(FooterBase)`
