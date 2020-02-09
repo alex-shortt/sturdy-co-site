@@ -13,13 +13,17 @@ const Hit = styled.div`
 
 export default function Slice(props) {
   const {
-    item: { title, subtitle },
-    onHover
+    item: { i, title, subtitle },
+    onHover,
+    activeIndex,
+    onClick
   } = props
+
+  const handleClick = () => i === activeIndex && onClick()
 
   return (
     <>
-      <Hit onMouseMove={onHover} />
+      <Hit onMouseMove={onHover} onClick={handleClick} />
       <ActiveSlice {...props}>
         {title}
         <br />

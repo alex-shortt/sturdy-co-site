@@ -1,11 +1,101 @@
 [
-  { "title": "Drake", "subtitle": "2019-2020" },
-  { "title": "Travis Scott", "subtitle": "2019-2020" },
-  { "title": "Migos", "subtitle": "2019-2020" },
-  { "title": "YG", "subtitle": "2019-2020" },
-  { "title": "Majid Jordan", "subtitle": "2019-2020" },
-  { "title": "PartyNextDoor", "subtitle": "2019-2020" },
-  { "title": "Khalid", "subtitle": "2019-2020" },
-  { "title": "Rosalia", "subtitle": "2019-2020" },
-  { "title": "5SOS", "subtitle": "2019-2020" }
+  {
+    "id": "drake",
+    "title": "Drake",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "travis-scott",
+    "title": "Travis Scott",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "migos",
+    "title": "Migos",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "yg",
+    "title": "YG",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "majid-jordan",
+    "title": "Majid Jordan",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "partynextdoor",
+    "title": "PartyNextDoor",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "khalid",
+    "title": "Khalid",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "rosalia",
+    "title": "Rosalia",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  },
+  {
+    "id": "5sos",
+    "title": "5SOS",
+    "subtitle": "2019-2020",
+    "credits": "CREATIVE DIRECTOR: ADRIAN MARTINEZ\nANIMATOR: JASPER HEENAN\nPHOTOS: IVOR MCCRAY & KEVIN HENRY",
+    "images": [
+      "https://www.billboard.com/files/styles/article_main_image/public/media/Rosalia-bb24-2019-feat-billboard-cwgrtcna-1548.jpg",
+      "https://peopledotcom.files.wordpress.com/2020/01/rosalia-1.jpg",
+      "https://consequenceofsound.net/wp-content/uploads/2019/11/Rosalia-a-pale-music-video-new-song-stream.png"
+    ]
+  }
 ]

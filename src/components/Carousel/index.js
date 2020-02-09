@@ -13,7 +13,7 @@ const Container = styled.div`
 `
 
 export default function Carousel(props) {
-  const { data } = props
+  const { data, history } = props
 
   const [dims, setDims] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
@@ -22,7 +22,6 @@ export default function Carousel(props) {
   useEffect(() => {
     if (!dims) {
       setDims(getSlicesDims())
-      assignColors(data)
       window.addEventListener("resize", () => setDims(getSlicesDims()))
       window.addEventListener("mousemove", e => {
         if (!isDescendant(containerRef.current, e.target)) {
@@ -37,6 +36,7 @@ export default function Carousel(props) {
       {data.map((item, i) => (
         <Slice
           onHover={() => setActiveIndex(i)}
+          onClick={() => history.push(`/${item.id}`)}
           item={{ ...item, i }}
           parentDims={dims || getSlicesDims()}
           data={data}
@@ -62,14 +62,4 @@ const isDescendant = (parent, child) => {
     node = node.parentNode
   }
   return false
-}
-
-const assignColors = data => {
-  for (const card of data) {
-    const hue = Math.random() * 360
-    const sat = Math.random() * 20 + 80
-    const lit = Math.random() * 20 + 50
-
-    card.color = `hsl(${hue}, ${sat}%, ${lit}%)`
-  }
 }

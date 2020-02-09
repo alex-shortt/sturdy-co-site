@@ -9,7 +9,7 @@ const Container = styled.div`
   top: 0;
   left: 0;
   background: black;
-  z-index: 2;
+  z-index: 4;
 `
 
 const Link = styled(LinkBase)`
