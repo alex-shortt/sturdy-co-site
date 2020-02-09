@@ -12,6 +12,7 @@ export default createGlobalStyle`
     background: black;
     color: white;
     font-family: din-2014, Roboto, sans-serif;
+    overflow: hidden;
   }
 
   body {

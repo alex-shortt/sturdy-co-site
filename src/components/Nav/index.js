@@ -4,11 +4,12 @@ import { Route, Link as LinkBase } from "react-router-dom"
 
 const Container = styled.div`
   position: absolute;
-  margin-top: 60px;
-  margin-left: 60px;
+  margin-top: 40px;
+  margin-left: 40px;
   top: 0;
   left: 0;
   background: black;
+  padding: 20px 0 0 20px;
   z-index: 4;
 `
 

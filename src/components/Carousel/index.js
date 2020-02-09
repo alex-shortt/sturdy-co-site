@@ -36,7 +36,10 @@ export default function Carousel(props) {
       {data.map((item, i) => (
         <Slice
           onHover={() => setActiveIndex(i)}
-          onClick={() => history.push(`/${item.id}`)}
+          onClick={() => {
+            history.push(`/${item.id}`)
+            setActiveIndex(null)
+          }}
           item={{ ...item, i }}
           parentDims={dims || getSlicesDims()}
           data={data}

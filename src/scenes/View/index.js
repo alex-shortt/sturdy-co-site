@@ -1,27 +1,33 @@
 import React, { useState } from "react"
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 
 import Helmet from "components/Helmet"
 import Carousel from "components/Carousel"
 import FooterBase from "components/Footer"
 import clients from "assets/data/clients"
 import sturdyImg from "assets/images/logo.png"
-import Client from "components/Client"
+import ClientBase from "components/Client"
+
+const shiftAnimation = css`
+  transition: transform 1250ms ease-in-out;
+`
 
 const Container = styled.div`
-  max-width: 1000px;
+  max-width: 1400px;
   padding: 0 180px;
   margin: 0 auto;
+  box-sizing: border-box;
 
   height: 100%;
   width: 100%;
-  box-sizing: border-box;
+
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  z-index: 1;
-  transform-style: flat;
+
+  transform: translateY(${props => (props.shiftUp ? "-100%" : "0")});
+  ${shiftAnimation};
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`
@@ -37,34 +43,38 @@ const Footer = styled(FooterBase)`
   bottom: 0;
 `
 
+const Client = styled(ClientBase)`
+  transform: translateY(${props => (props.shiftUp ? "-100%" : "0")});
+  ${shiftAnimation};
+`
+
 const DATA = clients
 
 export default function View(props) {
   const {
     match: {
       params: { id }
-    },
-    ...restProps
+    }
   } = props
 
-  const [loaded, setLoaded] = useState(false)
-  const [data, setData] = useState(DATA)
+  const [data, setData] = useState(null)
 
-  if (!loaded) {
-    const newClients = assignColors(data)
-    setLoaded(true)
-    setData(newClients)
+  if (!data) {
+    const fixedData = assignColors(DATA)
+    setData(fixedData)
+
+    return <></>
   }
 
   return (
     <>
-      <Client id={id} data={data} />
-      <Container>
+      <Container shiftUp={id !== undefined}>
         <Helmet title="Home" />
         <Logo />
-        <Carousel data={data} {...restProps} />
+        <Carousel data={data} {...props} />
         <Footer />
       </Container>
+      <Client id={id} data={data} shiftUp={id !== undefined} />
     </>
   )
 }

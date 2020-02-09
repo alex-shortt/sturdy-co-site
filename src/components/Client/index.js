@@ -1,19 +1,15 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components/macro"
 
 const Container = styled.div`
   background: black;
   width: 100%;
-  height: calc(100% - 60px);
+  height: 100%;
   overflow-y: auto;
-  position: absolute;
   top: 0;
   z-index: 3;
-  margin-top: 60px;
+  padding-top: 60px;
   box-sizing: border-box;
-  transform-style: preserve-3d;
-  transform: translate3d(0, 0, 0.5px);
-  display: ${props => (props.open ? "initial" : "none")};
 `
 
 const Wrapper = styled.div`
@@ -46,32 +42,37 @@ const Credits = styled.h3`
 `
 
 export default function Client(props) {
-  const { id, data } = props
+  const { id, data, ...restProps } = props
 
-  const client = data.find(dat => dat.id === id)
+  const thisClient = data.find(dat => dat.id === id)
+  const [client, setClient] = useState(thisClient)
 
-  if (!client) {
-    return <></>
-  }
+  useEffect(() => {
+    if (thisClient && client !== thisClient) {
+      setClient(thisClient)
+    }
+  }, [client, thisClient])
 
-  const { title, subtitle, credits, images } = client
+  const { title, subtitle, credits, images } = client || {}
 
   return (
-    <Container open={!!title}>
-      <Wrapper>
-        <Title>
-          {title}
-          <Subtitle>{subtitle}</Subtitle>
-        </Title>
-        <Credits>
-          {credits.split("\n").map(cred => (
-            <>
-              {cred}
-              <br />
-            </>
-          ))}
-        </Credits>
-      </Wrapper>
+    <Container {...restProps}>
+      {client && (
+        <Wrapper>
+          <Title>
+            {title}
+            <Subtitle>{subtitle}</Subtitle>
+          </Title>
+          <Credits>
+            {credits.split("\n").map(cred => (
+              <>
+                {cred}
+                <br />
+              </>
+            ))}
+          </Credits>
+        </Wrapper>
+      )}
     </Container>
   )
 }
