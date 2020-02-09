@@ -66,6 +66,7 @@ export default function ActiveSlice(props) {
       "translateY(-50%)" +
       `translateX(-${pos * 100}%)` +
       "scale(1.03)" +
+      "translateZ(-20px)" +
       `translate3d(${x}px, 0, ${z}px)` +
       `rotateY(${ry}deg)`
   )
@@ -104,7 +105,7 @@ const calcWrapperPos = props => {
   }
 
   if (active) {
-    newWrapperPos.xrYz[2] = MAX_DEPTH + 40
+    newWrapperPos.xrYz[2] = MAX_DEPTH + 30
     newWrapperPos.wh = [HEIGHT * 1.1, HEIGHT * 1.1]
   } else if (activeIndex !== null) {
     // line up slices for when it rotates
@@ -122,8 +123,14 @@ const calcWrapperPos = props => {
       (0.8 - Math.abs(activePos - 0.5)) *
       (i < activeIndex ? -1 : 1)
 
-    newWrapperPos.xrYz[2] = MAX_DEPTH * linear // move in 3d
-    newWrapperPos.xrYz[1] = THETA * (i < activeIndex ? -1 : 1) // rotate
+    // move in 3d
+    newWrapperPos.xrYz[2] += MAX_DEPTH * linear
+
+    // give breathing room on edges
+    newWrapperPos.xrYz[2] += Math.abs(activePos - 0.5) * -HEIGHT
+
+    // rotate
+    newWrapperPos.xrYz[1] = THETA * (i < activeIndex ? -1 : 1)
   }
 
   return newWrapperPos
