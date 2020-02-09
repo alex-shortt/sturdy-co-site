@@ -58,6 +58,8 @@ export default function Footer(props) {
           <IG />
         </Anchor>
         <Spacer>|</Spacer>
+        <Anchor href="mailto:contact@sturdy.co">CONTACT</Anchor>
+        <Spacer>|</Spacer>
         <Link to="/privacy">PRIVACY POLICY</Link>
         <Spacer>|</Spacer>
         &copy; STURDY 2020 - ALL RIGHTS RESERVED
