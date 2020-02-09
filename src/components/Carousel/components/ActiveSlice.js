@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components/macro"
 import { useSpring, animated } from "react-spring"
 
@@ -8,6 +8,7 @@ const Wrapper = styled(animated.div)`
   transform-style: preserve-3d;
   top: 50%;
   left: ${props => props.pos * 100}%;
+  transition: width 350ms ease-out, height 350ms ease-out;
 `
 
 const Container = styled(animated.div)`
@@ -37,30 +38,30 @@ export default function ActiveSlice(props) {
     item: { i },
     parentDims: { width: WIDTH, height: HEIGHT },
     activeIndex,
-    children,
-    hue
+    children
   } = props
+
+  const [currIndex, setCurrIndex] = useState(activeIndex)
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
 
   const [wrapperPos, setWrapperPos] = useSpring(() => ({
     wh: [WIDTH / data.length, HEIGHT],
-    xryz: [0, 0, 0],
-    config: { mass: 3, tension: 550, friction: 60 }
+    xrYz: [0, 0, 0],
+    config: { mass: 2, tension: 400, friction: 60 }
   }))
 
-  // styling
-  const containerStyle = {
-    background: `hsl(${hue}, 100%, ${pos * 50 + 20}%)`,
-    filter: []
+  const containerStyle = calcContainerStyle(props)
+  if (currIndex !== activeIndex) {
+    const newWrapperStyle = calcWrapperPos(props)
+    setWrapperPos(newWrapperStyle)
+    setCurrIndex(activeIndex)
   }
-
-  calcStyles(props, setWrapperPos, containerStyle)
 
   // interpolate wrapper style
   const wrapperStyle = {}
-  wrapperStyle.transform = wrapperPos.xryz.interpolate(
+  wrapperStyle.transform = wrapperPos.xrYz.interpolate(
     (x, ry, z) =>
       "translateY(-50%)" +
       `translateX(-${pos * 100}%)` +
@@ -68,8 +69,8 @@ export default function ActiveSlice(props) {
       `translate3d(${x}px, 0, ${z}px)` +
       `rotateY(${ry}deg)`
   )
-  wrapperStyle.width = wrapperPos.wh.interpolate((w, h) => `${w}px`)
-  wrapperStyle.height = wrapperPos.wh.interpolate((w, h) => `${h}px`)
+  wrapperStyle.width = active ? HEIGHT * 1.1 : WIDTH / data.length // wrapperPos.wh.interpolate((w, h) => `${w}px`)
+  wrapperStyle.height = active ? HEIGHT * 1.1 : HEIGHT // wrapperPos.wh.interpolate((w, h) => `${h}px`)
 
   return (
     <Wrapper style={wrapperStyle} pos={pos}>
@@ -80,9 +81,7 @@ export default function ActiveSlice(props) {
   )
 }
 
-const calcStyles = (props, setWrapperPos, containerStyle) => {
-  /*eslint-disable */
-
+const calcWrapperPos = props => {
   const {
     data,
     item: { i },
@@ -91,6 +90,7 @@ const calcStyles = (props, setWrapperPos, containerStyle) => {
   } = props
 
   const active = activeIndex === i
+  const pos = i / (data.length - 1)
   const activePos = activeIndex / (data.length - 1)
 
   const MAX_DEPTH = 300
@@ -103,40 +103,63 @@ const calcStyles = (props, setWrapperPos, containerStyle) => {
   const linear = -dist / maxDist + 1
 
   const newWrapperPos = {
-    wh: [WIDTH / data.length, HEIGHT], //px
-    xryz: [0, 0, 0] // px deg px
+    wh: [WIDTH / data.length, HEIGHT], // px
+    xrYz: [0, 0, 0] // px deg px
   }
 
   if (active) {
-    // this one is active
-    newWrapperPos.xryz[2] = MAX_DEPTH + 40
+    newWrapperPos.xrYz[2] = MAX_DEPTH + 40
     newWrapperPos.wh = [HEIGHT * 1.1, HEIGHT * 1.1]
-    containerStyle.filter.push("grayscale(0)")
-    containerStyle.filter.push("blur(0px)")
   } else if (activeIndex !== null) {
-    // another one is active
-
     // line up slices for when it rotates
     const wPrime = newWrapperPos.wh[0] * Math.cos((THETA * Math.PI) / 180)
     const space = newWrapperPos.wh[0] - wPrime
     const shift = (i < activeIndex ? 1 : -1) * space * dist
-    newWrapperPos.xryz[0] += shift * 1.08 // 1.08 to fill up holes
+    newWrapperPos.xrYz[0] += shift * 1.08 // 1.08 to fill up holes
 
     // line up first slice with middle of active slice
-    newWrapperPos.xryz[0] += (activePos - 0.5) * -HEIGHT
+    newWrapperPos.xrYz[0] += (activePos - 0.5) * -HEIGHT
 
     // push to edges of active slice, do it less for the outer ones
-    newWrapperPos.xryz[0] +=
+    newWrapperPos.xrYz[0] +=
       (HEIGHT / 2) *
       (0.8 - Math.abs(activePos - 0.5)) *
       (i < activeIndex ? -1 : 1)
 
-    // move in 3d
-    newWrapperPos.xryz[2] = MAX_DEPTH * linear
+    newWrapperPos.xrYz[2] = MAX_DEPTH * linear // move in 3d
+    newWrapperPos.xrYz[1] = THETA * (i < activeIndex ? -1 : 1) // rotate
+  }
 
-    // rotate
-    newWrapperPos.xryz[1] = THETA * (i < activeIndex ? -1 : 1)
+  return newWrapperPos
+}
 
+const calcContainerStyle = props => {
+  const {
+    data,
+    item: { i },
+    activeIndex,
+    hue
+  } = props
+
+  const active = activeIndex === i
+  const pos = i / (data.length - 1)
+
+  const dist = Math.abs(activeIndex - i)
+  const maxDist = Math.floor(data.length * 0.6)
+
+  // -x/n + 1 -- linear interpolation from 0 to 1, given dist
+  const linear = -dist / maxDist + 1
+
+  const containerStyle = {
+    background: `hsl(${hue}, 100%, ${pos * 50 + 20}%)`,
+    filter: []
+  }
+
+  if (active) {
+    // this one is active
+    containerStyle.filter.push("grayscale(0)")
+    containerStyle.filter.push("blur(0px)")
+  } else if (activeIndex !== null) {
     // effects
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
     containerStyle.filter.push("grayscale(1)")
@@ -144,9 +167,7 @@ const calcStyles = (props, setWrapperPos, containerStyle) => {
     containerStyle.filter.push("grayscale(1)")
   }
 
-  setWrapperPos(newWrapperPos)
-
   containerStyle.filter = containerStyle.filter.join(" ")
 
-  /* eslint-enable */
+  return containerStyle
 }
