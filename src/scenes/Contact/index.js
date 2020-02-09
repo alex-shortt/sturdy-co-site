@@ -4,7 +4,10 @@ import styled from "styled-components/macro"
 import Helmet from "components/Helmet"
 
 const Container = styled.div`
-  padding: 60px 180px;
+  width: 100%;
+  max-width: 1400px;
+  padding: 0 180px;
+  margin: 60px auto 0;
   height: 100%;
   box-sizing: border-box;
 `

@@ -10,7 +10,6 @@ const Container = styled.div`
   top: 0;
   z-index: 3;
   margin-top: 60px;
-  padding-top: 60px;
   box-sizing: border-box;
   transform-style: preserve-3d;
   transform: translate3d(0, 0, 0.5px);
@@ -18,9 +17,10 @@ const Container = styled.div`
 `
 
 const Wrapper = styled.div`
-  max-width: 1000px;
+  max-width: 1400px;
   padding: 0 180px;
   margin: 0 auto;
+  box-sizing: border-box;
 `
 
 const Title = styled.h1`
