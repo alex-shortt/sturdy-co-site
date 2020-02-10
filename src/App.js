@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import useReactRouter from "use-react-router"
 
@@ -20,6 +20,10 @@ const GoogleAnalytics = () => {
 }
 
 export default function App() {
+  const [skipIntro, setSkipIntro] = useState(false)
+
+  const hideIntro = () => setSkipIntro(true)
+
   return (
     <>
       <GlobalStyles />
@@ -29,10 +33,32 @@ export default function App() {
           <Nav />
           <ScrollToTop>
             <Switch>
-              <Route path="/" exact component={View} />
-              <Route path="/about" exact component={About} />
-              <Route path="/contact" exact component={Contact} />
-              <Route path="/:id" exact component={View} />
+              <Route
+                path="/"
+                exact
+                render={props => (
+                  <View
+                    {...props}
+                    skipIntro={skipIntro}
+                    hideIntro={hideIntro}
+                  />
+                )}
+              />
+              <Route
+                path="/about"
+                exact
+                render={props => <About {...props} onLoad={hideIntro} />}
+              />
+              <Route
+                path="/contact"
+                exact
+                render={props => <Contact {...props} onLoad={hideIntro} />}
+              />
+              <Route
+                path="/:id"
+                exact
+                render={props => <View {...props} onLoad={hideIntro} />}
+              />
             </Switch>
           </ScrollToTop>
         </Router>

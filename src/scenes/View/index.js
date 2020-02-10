@@ -1,50 +1,29 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components/macro"
 
 import Helmet from "components/Helmet"
-import Carousel from "components/Carousel"
-import FooterBase from "components/Footer"
 import clients from "assets/data/clients"
-import sturdyImg from "assets/images/logo.png"
 import ClientBase from "components/Client"
+import IntroVideoBase from "components/IntroVideo"
+import HomeBase from "components/Home"
+import { useData } from "services/data"
 
 const shiftAnimation = css`
   transition: transform 1250ms ease-in-out;
 `
 
-const Container = styled.div`
-  max-width: 1400px;
-  padding: 0 180px;
-  margin: 0 auto;
-  box-sizing: border-box;
-
-  height: 100%;
-  width: 100%;
-
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-
-  transform: translateY(${props => (props.shiftUp ? "-100%" : "0")});
+const Home = styled(HomeBase)`
+  transform: translateY(${props => props.shiftAmount * -100}%);
   ${shiftAnimation};
 `
 
-const Logo = styled.img.attrs({ src: sturdyImg })`
-  height: calc(70px + 3vw);
-  width: 100%;
-  object-fit: contain;
-  position: absolute;
-  top: 60px;
-`
-
-const Footer = styled(FooterBase)`
-  position: absolute;
-  bottom: 0;
-`
-
 const Client = styled(ClientBase)`
-  transform: translateY(${props => (props.shiftUp ? "-100%" : "0")});
+  transform: translateY(${props => props.shiftAmount * -100}%);
+  ${shiftAnimation};
+`
+
+const IntroVideo = styled(IntroVideoBase)`
+  transform: translateY(${props => props.shiftAmount * -100}%);
   ${shiftAnimation};
 `
 
@@ -54,39 +33,34 @@ export default function View(props) {
   const {
     match: {
       params: { id }
-    }
+    },
+    skipIntro,
+    onLoad,
+    hideIntro
   } = props
 
-  const [data, setData] = useState(null)
-
-  if (!data) {
-    const fixedData = assignColors(DATA)
-    setData(fixedData)
-
-    return <></>
+  if (onLoad) {
+    onLoad()
   }
+
+  // eslint-disable-next-line no-nested-ternary
+  const initPos = id === undefined ? (skipIntro ? 1 : 0) : 2
+  const [shiftPos, setShiftPos] = useState(initPos)
+  const data = useData(DATA)
+
+  useEffect(() => {
+    if (id !== undefined) {
+      setShiftPos(2)
+    } else if (skipIntro) {
+      setShiftPos(1)
+    }
+  }, [id, skipIntro])
 
   return (
     <>
-      <Container shiftUp={id !== undefined}>
-        <Helmet title="Home" />
-        <Logo />
-        <Carousel data={data} {...props} />
-        <Footer />
-      </Container>
-      <Client id={id} data={data} shiftUp={id !== undefined} />
+      <IntroVideo shiftAmount={shiftPos} onClick={hideIntro} />
+      <Home shiftAmount={shiftPos} data={data} {...props} />
+      <Client id={id} data={data} shiftAmount={shiftPos} />
     </>
   )
-}
-
-const assignColors = data => {
-  for (const card of data) {
-    const hue = Math.random() * 360
-    const sat = Math.random() * 20 + 80
-    const lit = Math.random() * 20 + 50
-
-    card.color = `hsl(${hue}, ${sat}%, ${lit}%)`
-  }
-
-  return data
 }

@@ -13,6 +13,10 @@ const Container = styled.div`
 `
 
 export default function Contact(props) {
+  const { onLoad } = props
+
+  onLoad()
+
   return (
     <Container>
       <Helmet title="Contact" />
