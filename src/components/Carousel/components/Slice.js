@@ -11,23 +11,9 @@ const Hit = styled.div`
   position: relative;
 `
 
-const Title = styled.h2`
-  color: white;
-  margin: 0;
-  font-size: 1.5rem;
-  letter-spacing: 2px;
-`
-
-const Subtitle = styled.h5`
-  font-weight: 100;
-  margin: 2px 0 0;
-  color: white;
-  font-size: 0.75rem;
-`
-
 export default function Slice(props) {
   const {
-    item: { i, title, subtitle },
+    item: { i },
     onHover,
     activeIndex,
     onClick
@@ -38,10 +24,7 @@ export default function Slice(props) {
   return (
     <>
       <Hit onMouseMove={onHover} onClick={handleClick} />
-      <ActiveSlice {...props}>
-        <Title>{title}</Title>
-        <Subtitle>{subtitle}</Subtitle>
-      </ActiveSlice>
+      <ActiveSlice {...props} />
     </>
   )
 }

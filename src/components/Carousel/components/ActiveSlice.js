@@ -1,6 +1,8 @@
-import React, { useState } from "react"
+import React from "react"
 import styled from "styled-components/macro"
 import { useSpring, animated } from "react-spring"
+
+import RevealText from "components/RevealText"
 
 const Wrapper = styled(animated.div)`
   position: absolute;
@@ -9,6 +11,7 @@ const Wrapper = styled(animated.div)`
   top: 50%;
   left: ${props => props.pos * 100}%;
   transition: width 350ms ease-out, height 350ms ease-out;
+  overflow: hidden;
 `
 
 const Container = styled(animated.div)`
@@ -19,29 +22,26 @@ const Container = styled(animated.div)`
 
 const Content = styled.div`
   opacity: ${props => (props.active ? 1 : 0)};
-  transition: ${props => (props.active ? "ease-out 300ms" : "ease-out 200ms")};
-  color: white;
+  transition: 100ms;
   width: 100%;
   height: 100%;
   display: flex;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
-  font-weight: bold;
   text-align: center;
   position: relative;
-  text-transform: uppercase;
+  transform-style: flat;
 `
 
 export default function ActiveSlice(props) {
   const {
     data,
-    item: { i },
+    item: { i, title, subtitle, color },
     parentDims: { width: WIDTH, height: HEIGHT },
     activeIndex,
     children
   } = props
-
-  const [currIndex, setCurrIndex] = useState(activeIndex)
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
@@ -53,11 +53,8 @@ export default function ActiveSlice(props) {
   }))
 
   const containerStyle = calcContainerStyle(props)
-  if (currIndex !== activeIndex) {
-    const newWrapperStyle = calcWrapperPos(props)
-    setWrapperPos(newWrapperStyle)
-    setCurrIndex(activeIndex)
-  }
+  const newWrapperStyle = calcWrapperPos(props)
+  setWrapperPos(newWrapperStyle)
 
   // interpolate wrapper style
   const wrapperStyle = {}
@@ -76,7 +73,11 @@ export default function ActiveSlice(props) {
   return (
     <Wrapper style={wrapperStyle} pos={pos}>
       <Container style={containerStyle}>
-        <Content active={active}>{children}</Content>
+        <Content active={active}>
+          {active && (
+            <RevealText title={title} subtitle={subtitle} color={color} />
+          )}
+        </Content>
       </Container>
     </Wrapper>
   )
