@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components/macro"
 
+import Gallery from "./components/Gallery"
+
 const Container = styled.div`
   background: black;
   width: 100%;
@@ -65,12 +67,13 @@ export default function Client(props) {
           </Title>
           <Credits>
             {credits.split("\n").map(cred => (
-              <>
+              <React.Fragment key={cred}>
                 {cred}
                 <br />
-              </>
+              </React.Fragment>
             ))}
           </Credits>
+          <Gallery images={images} />
         </Wrapper>
       )}
     </Container>
