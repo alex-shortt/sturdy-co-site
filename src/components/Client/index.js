@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components/macro"
 
 import Gallery from "./components/Gallery"
@@ -46,19 +46,22 @@ const Credits = styled.h3`
 export default function Client(props) {
   const { id, data, ...restProps } = props
 
+  const container = useRef()
+
   const thisClient = data.find(dat => dat.id === id)
   const [client, setClient] = useState(thisClient)
 
   useEffect(() => {
     if (thisClient && client !== thisClient) {
       setClient(thisClient)
+      container.current.scrollTo(0, 0)
     }
   }, [client, thisClient])
 
   const { title, subtitle, credits, images } = client || {}
 
   return (
-    <Container {...restProps}>
+    <Container {...restProps} ref={container}>
       {client && (
         <Wrapper>
           <Title>
