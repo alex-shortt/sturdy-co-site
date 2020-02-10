@@ -1,6 +1,8 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components/macro"
 
+import sturdyImg from "assets/images/logo.png"
+
 import Gallery from "./components/Gallery"
 
 const Container = styled.div`
@@ -10,7 +12,7 @@ const Container = styled.div`
   overflow-y: auto;
   top: 0;
   z-index: 3;
-  padding-top: 60px;
+  padding: 60px 0;
   box-sizing: border-box;
 `
 
@@ -43,6 +45,21 @@ const Credits = styled.h3`
   text-transform: uppercase;
 `
 
+const Info = styled.div`
+  width: 100%;
+  padding-right: 180px;
+  position: relative;
+  box-sizing: border-box;
+`
+
+const Logo = styled.img.attrs({ src: sturdyImg })`
+  width: 180px;
+  height: auto;
+  position: absolute;
+  right: 0;
+  top: 0;
+`
+
 export default function Client(props) {
   const { id, data, ...restProps } = props
 
@@ -64,18 +81,21 @@ export default function Client(props) {
     <Container {...restProps} ref={container}>
       {client && (
         <Wrapper>
-          <Title>
-            {title}
-            <Subtitle>{subtitle}</Subtitle>
-          </Title>
-          <Credits>
-            {credits.split("\n").map(cred => (
-              <React.Fragment key={cred}>
-                {cred}
-                <br />
-              </React.Fragment>
-            ))}
-          </Credits>
+          <Info>
+            <Title>
+              {title}
+              <Subtitle>{subtitle}</Subtitle>
+            </Title>
+            <Credits>
+              {credits.split("\n").map(cred => (
+                <React.Fragment key={cred}>
+                  {cred}
+                  <br />
+                </React.Fragment>
+              ))}
+            </Credits>
+            <Logo />
+          </Info>
           <Gallery images={images} />
         </Wrapper>
       )}
