@@ -6,6 +6,8 @@ const Container = styled.div`
   width: 100%;
   height: 100%;
   cursor: pointer;
+  background: black;
+  z-index: 10;
 `
 
 const Video = styled.video`
