@@ -35,13 +35,10 @@ const Content = styled.div`
 `
 
 export default function ActiveSlice(props) {
-  const {
-    data,
-    item: { i, title, subtitle, color },
-    parentDims: { width: WIDTH, height: HEIGHT },
-    activeIndex,
-    children
-  } = props
+  const { data, item, parentDims, activeIndex } = props
+
+  const { i, title, subtitle, color } = item
+  const { width: WIDTH, height: HEIGHT } = parentDims
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
@@ -84,12 +81,10 @@ export default function ActiveSlice(props) {
 }
 
 const calcWrapperPos = props => {
-  const {
-    data,
-    item: { i },
-    parentDims: { width: WIDTH, height: HEIGHT },
-    activeIndex
-  } = props
+  const { data, item, parentDims, activeIndex } = props
+
+  const { width: WIDTH, height: HEIGHT } = parentDims
+  const { i } = item
 
   const MAX_DEPTH = 300
   const THETA = 45 // 0-90 in deg
@@ -98,7 +93,6 @@ const calcWrapperPos = props => {
   const activePos = activeIndex / (data.length - 1)
   const dist = Math.abs(activeIndex - i)
   const maxDist = Math.floor(data.length * 0.6)
-  const linear = -dist / maxDist + 1
 
   const newWrapperPos = {
     wh: [WIDTH / data.length, HEIGHT], // px
@@ -108,12 +102,13 @@ const calcWrapperPos = props => {
   if (active) {
     newWrapperPos.xrYz[2] = MAX_DEPTH + 30
     newWrapperPos.wh = [HEIGHT * 1.1, HEIGHT * 1.1]
+    // move away from edge
+    newWrapperPos.xrYz[0] += ((activePos - 0.5) * -WIDTH) / data.length
   } else if (activeIndex !== null) {
     // line up slices for when it rotates
     const wPrime = newWrapperPos.wh[0] * Math.cos((THETA * Math.PI) / 180)
     const space = newWrapperPos.wh[0] - wPrime
-    const shift = (i < activeIndex ? 1 : -1) * space * dist
-    newWrapperPos.xrYz[0] += shift * 1.08 // 1.08 to fill up holes
+    newWrapperPos.xrYz[0] += (i < activeIndex ? 1 : -1) * space * dist
 
     // line up first slice with middle of active slice
     newWrapperPos.xrYz[0] += (activePos - 0.5) * -HEIGHT
@@ -125,7 +120,7 @@ const calcWrapperPos = props => {
       (i < activeIndex ? -1 : 1)
 
     // move in 3d
-    newWrapperPos.xrYz[2] += MAX_DEPTH * linear
+    newWrapperPos.xrYz[2] += MAX_DEPTH * ((-dist * (WIDTH / 800)) / maxDist + 1)
 
     // give breathing room on edges
     newWrapperPos.xrYz[2] += Math.abs(activePos - 0.5) * -HEIGHT
@@ -138,11 +133,9 @@ const calcWrapperPos = props => {
 }
 
 const calcContainerStyle = props => {
-  const {
-    data,
-    item: { i, color },
-    activeIndex
-  } = props
+  const { data, item, activeIndex } = props
+
+  const { i, color } = item
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
