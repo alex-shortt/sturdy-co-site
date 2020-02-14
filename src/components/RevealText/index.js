@@ -130,6 +130,10 @@ const Title = styled.span`
     font-size: 1.25rem;
     letter-spacing: 1px;
   }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.9rem;
+  }
 `
 
 const Subtitle = styled.span`
@@ -137,10 +141,14 @@ const Subtitle = styled.span`
   font-weight: 100;
   color: white;
   font-size: 1rem;
-  padding: 4px 0;
+  padding: 0.25em 0;
 
   @media screen and (max-width: 1100px) {
     font-size: 0.75rem;
+  }
+
+  @media screen and (max-width: 500px) {
+    font-size: 0.8rem;
   }
 `
 
