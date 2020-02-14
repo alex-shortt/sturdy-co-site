@@ -22,6 +22,10 @@ const Container = styled.div`
   @media screen and (max-width: 700px) {
     padding: 0 140px;
   }
+
+  @media screen and (max-width: 700px) {
+    padding: 0;
+  }
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`

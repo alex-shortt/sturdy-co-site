@@ -6,7 +6,6 @@ import RevealText from "components/RevealText"
 
 const Wrapper = styled(animated.div)`
   position: absolute;
-  pointer-events: none;
   transform-style: preserve-3d;
   left: 50%;
   top: ${props => props.pos * 100}%;
@@ -32,10 +31,12 @@ const Content = styled.div`
   text-align: center;
   position: relative;
   transform-style: flat;
+  user-select: none;
+  pointer-events: ${props => (props.active ? "all" : "none")};
 `
 
 export default function VerticalActiveSlice(props) {
-  const { data, item, parentDims, activeIndex } = props
+  const { data, item, parentDims, activeIndex, onClick } = props
 
   const { i, title, subtitle, color } = item
   const { width: WIDTH, height: HEIGHT } = parentDims
@@ -64,15 +65,15 @@ export default function VerticalActiveSlice(props) {
       `translate3d(0, ${y}px, ${z}px)` +
       `rotateX(${rx}deg)`
   )
-  wrapperStyle.width = active ? WIDTH * 1.1 : WIDTH // wrapperPos.wh.interpolate((w, h) => `${w}px`)
+  wrapperStyle.width = active ? WIDTH * 1.05 : WIDTH
   wrapperStyle.height = active
-    ? (HEIGHT * 2) / data.length
-    : HEIGHT / data.length // wrapperPos.wh.interpolate((w, h) => `${h}px`)
+    ? (HEIGHT * 3) / data.length
+    : HEIGHT / data.length
 
   return (
     <Wrapper style={wrapperStyle} pos={pos}>
       <Container style={containerStyle}>
-        <Content active={active}>
+        <Content active={active} onClick={onClick}>
           {active && (
             <RevealText title={title} subtitle={subtitle} color={color} />
           )}
@@ -89,7 +90,7 @@ const calcWrapperPos = props => {
   const { i } = item
 
   const MAX_DEPTH = 300
-  const THETA = 45 // 0-90 in deg
+  const THETA = 55 // 0-90 in deg
 
   const active = activeIndex === i
   const activePos = activeIndex / (data.length - 1)
@@ -103,29 +104,25 @@ const calcWrapperPos = props => {
 
   if (active) {
     newWrapperPos.yrXz[2] = MAX_DEPTH + 30
-    newWrapperPos.wh = [WIDTH * 1.1, (HEIGHT * 1.1) / data.length]
+
     // move away from edge
     newWrapperPos.yrXz[0] += (((activePos - 0.5) / 0.5) * -HEIGHT) / data.length
   } else if (activeIndex !== null) {
     // line up slices for when it rotates
     const wPrime = newWrapperPos.wh[1] * Math.cos((THETA * Math.PI) / 180)
     const space = newWrapperPos.wh[1] - wPrime
+
+    // move as a whole to get in line
     newWrapperPos.yrXz[0] += (i < activeIndex ? 1 : -1) * space * dist
-
-    // line up first slice with middle of active slice
-    newWrapperPos.yrXz[0] += (activePos - 0.5) * -WIDTH
-
     // push to edges of active slice
-    newWrapperPos.yrXz[0] +=
-      (WIDTH / 2) *
-      (0.6 + 0.6 * Math.abs(activePos - 0.5)) *
-      (i < activeIndex ? -1 : 1)
+    newWrapperPos.yrXz[0] += (HEIGHT / data.length) * (i < activeIndex ? -1 : 1)
+    // line up first slice with middle of active slice
+    newWrapperPos.yrXz[0] += (activePos - 0.5) * ((-HEIGHT * 4) / data.length)
 
-    // move in 3d
+    // move in 3d, use   G O D  C O N S T A N T
     newWrapperPos.yrXz[2] +=
-      MAX_DEPTH * ((-dist * (HEIGHT / 800)) / maxDist + 1)
-
-    // give breathing room on edges
+      MAX_DEPTH * ((-dist * (HEIGHT / 650)) / maxDist + 1)
+    // give breathing room for edges clipping
     newWrapperPos.yrXz[2] += Math.abs(activePos - 0.5) * -WIDTH
 
     // rotate

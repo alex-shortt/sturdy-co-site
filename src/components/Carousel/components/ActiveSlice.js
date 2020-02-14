@@ -32,6 +32,7 @@ const Content = styled.div`
   text-align: center;
   position: relative;
   transform-style: flat;
+  user-select: none;
 `
 
 export default function ActiveSlice(props) {
