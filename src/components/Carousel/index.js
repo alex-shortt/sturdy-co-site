@@ -10,6 +10,7 @@ const Container = styled.div`
   position: relative;
   transform-style: preserve-3d;
   perspective: 1100px;
+  ${props => props.vertical && "flex-direction: column"};
 `
 
 export default function Carousel(props) {
@@ -32,7 +33,7 @@ export default function Carousel(props) {
   }, [data, dims])
 
   return (
-    <Container style={dims} ref={containerRef}>
+    <Container style={dims} ref={containerRef} vertical={dims && dims.vertical}>
       {data.map((item, i) => (
         <Slice
           onHover={() => setActiveIndex(i)}
@@ -42,6 +43,7 @@ export default function Carousel(props) {
           }}
           item={{ ...item, i }}
           parentDims={dims || getSlicesDims()}
+          vertical={dims && dims.vertical}
           data={data}
           activeIndex={activeIndex}
         />
@@ -52,7 +54,18 @@ export default function Carousel(props) {
 
 const getSlicesDims = () => {
   const ratio = 5 / 16
+  const windowWidth = window.innerWidth
   const width = Math.min(window.innerWidth * 0.7, 900)
+
+  if (windowWidth < 750) {
+    const height = window.innerHeight - 400
+    return {
+      width: Math.min(width, (height * ratio * 3) / 2),
+      height,
+      vertical: true
+    }
+  }
+
   return { width, height: width * ratio }
 }
 
