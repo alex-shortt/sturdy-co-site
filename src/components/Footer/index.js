@@ -17,7 +17,7 @@ const Tag = styled.h4`
 `
 
 const Info = styled.h4`
-  color: #2c2c2c;
+  color: #666;
   margin-left: 1.3em;
   margin-right: 1.3em;
   line-height: 1.4em;
