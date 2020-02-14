@@ -12,6 +12,7 @@ const Wrapper = styled(animated.div)`
   transition: width 350ms ease-out, height 350ms ease-out;
   overflow: hidden;
   pointer-events: none;
+  pointer-events: all;
 `
 
 const Container = styled(animated.div)`
@@ -38,7 +39,7 @@ const Content = styled.div`
 `
 
 export default function VerticalActiveSlice(props) {
-  const { data, item, parentDims, activeIndex, onClick } = props
+  const { data, item, parentDims, activeIndex, onMouseDown } = props
 
   const { i, title, subtitle, color } = item
   const { width: WIDTH, height: HEIGHT } = parentDims
@@ -75,7 +76,7 @@ export default function VerticalActiveSlice(props) {
   return (
     <Wrapper style={wrapperStyle} pos={pos}>
       <Container style={containerStyle}>
-        <Content active={active} onClick={onClick}>
+        <Content active={active} onMouseDown={onMouseDown}>
           {active && (
             <RevealText title={title} subtitle={subtitle} color={color} />
           )}

@@ -20,10 +20,10 @@ export default function Slice(props) {
     vertical
   } = props
 
-  const handleClick = () => i === activeIndex && onClick()
+  const handleClick = i === activeIndex && onClick
 
   if (vertical) {
-    return <VerticalActiveSlice onClick={handleClick} {...props} />
+    return <VerticalActiveSlice {...props} onMouseDown={handleClick} />
   }
 
   return <ActiveSlice onClick={handleClick} {...props} />

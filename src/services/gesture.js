@@ -3,13 +3,16 @@ import { useDrag, useMove } from "react-use-gesture"
 
 export function useGesture(dims, numSlices, setActiveIndex) {
   const handleGesture = useCallback(
-    ({ movement: [mx, my], xy: [x, y], hover, drag }) => {
+    ({ movement: [mx, my], xy: [x, y], hover, drag, click }) => {
       let newIndex = -1
 
-      if ((mx === 0 && my === 0) || hover) {
-        if (drag) {
+      const moved = mx !== 0 || my !== 0
+      const inCarouselBounds = isInBounds(x, y, dims)
+
+      if (!moved || hover) {
+        if (!inCarouselBounds && drag) {
           newIndex = null
-        } else if (isInBounds(x, y, dims)) {
+        } else if (inCarouselBounds) {
           newIndex = getIndexFromPos(x, y, numSlices, dims)
         } else {
           newIndex = null
@@ -32,7 +35,7 @@ export function useGesture(dims, numSlices, setActiveIndex) {
   )
 
   const onClick = e =>
-    handleGesture({ movement: [0, 0], xy: [e.clientX, e.clientY] })
+    handleGesture({ movement: [0, 0], xy: [e.clientX, e.clientY], click: true })
 
   return { dragBind, moveBind, onClick }
 }

@@ -18,6 +18,7 @@ const Container = styled(animated.div)`
   width: 100%;
   height: 100%;
   transition: background-color 350ms ease-out;
+  pointer-events: all;
 `
 
 const Content = styled.div`
