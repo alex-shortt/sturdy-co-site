@@ -1,5 +1,5 @@
 import React from "react"
-import styled from "styled-components/macro"
+import styled, { css } from "styled-components/macro"
 import { Route, Link as LinkBase } from "react-router-dom"
 
 const Container = styled.div`
@@ -27,7 +27,7 @@ const Container = styled.div`
   }
 `
 
-const Link = styled(LinkBase)`
+const NavStyle = css`
   display: block;
   color: white;
   text-transform: uppercase;
@@ -56,6 +56,13 @@ const Link = styled(LinkBase)`
   }
 `
 
+const StyledLink = styled(LinkBase)`
+  ${NavStyle}
+`
+const StyledAnchor = styled.a`
+  ${NavStyle}
+`
+
 const Indicator = styled.span`
   position: absolute;
   transform: translateX(-120%);
@@ -66,10 +73,10 @@ function NavLink(props) {
   return (
     <Route exact path={to}>
       {({ match }) => (
-        <Link match={match} to={to}>
+        <StyledLink match={match} to={to}>
           {match && <Indicator>+</Indicator>}
           {children}
-        </Link>
+        </StyledLink>
       )}
     </Route>
   )
@@ -80,7 +87,9 @@ export default function Nav(props) {
     <Container>
       <NavLink to="/">Home</NavLink>
       <NavLink to="/about">About</NavLink>
-      <NavLink to="/contact">Contact</NavLink>
+      <StyledAnchor href="https://shopify.com" target="_blank">
+        Merch
+      </StyledAnchor>
     </Container>
   )
 }

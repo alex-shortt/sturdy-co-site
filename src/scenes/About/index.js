@@ -31,13 +31,34 @@ export default function About(props) {
       <h1>ABOUT</h1>
       <br />
       <h3>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        We provide comprehensive direction on all things visual: Branding, Album
+        Art, Videos, Photography, and the Live Experience.
+        <br />
+        <br />
+        TOUR BRANDING: We help curate consistent imagery through fonts, color
+        palettes, photo, logos and other visual media.
+        <br />
+        <br />
+        ALBUM + TRACK ART: We convey an artist’s creative vision through album
+        creative, including cover art and package design.
+        <br />
+        <br />
+        VIDEO: We conceptualize, direct, and produce videos representative to
+        the artist’s music and vision.LIVE: We work with artists to create a
+        visually striking live experience, including stage design, lighting and
+        stage visuals.
+        <br />
+        <br />
+        MERCH DESIGN: We work with our team of designers to craft merchandise
+        that captures a moment and audiences in the artist’s musical timeline.
+        <br />
+        <br />
+        PHOTOGRAPHY: We create unique and authentic visual interpretations of
+        each artist’s vision.
+        <br />
+        <br />
+        TYPOGRAPHY + LOGO DESIGN: We create iconic and long-lasting custom type
+        for the artist.
       </h3>
     </Container>
   )

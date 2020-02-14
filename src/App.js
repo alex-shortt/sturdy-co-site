@@ -11,7 +11,6 @@ import Nav from "./components/Nav"
 
 const View = React.lazy(() => import("scenes/View"))
 const About = React.lazy(() => import("scenes/About"))
-const Contact = React.lazy(() => import("scenes/Contact"))
 
 const GoogleAnalytics = () => {
   const { location } = useReactRouter()
@@ -48,11 +47,6 @@ export default function App() {
                 path="/about"
                 exact
                 render={props => <About {...props} onLoad={hideIntro} />}
-              />
-              <Route
-                path="/contact"
-                exact
-                render={props => <Contact {...props} onLoad={hideIntro} />}
               />
               <Route
                 path="/:id"
