@@ -24,7 +24,7 @@ const Container = styled.div`
 `
 
 export default function Carousel(props) {
-  const { data, history } = props
+  const { data, id, history } = props
 
   const [dims, setDims] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
@@ -35,15 +35,20 @@ export default function Carousel(props) {
       setDims(getSlicesDims())
       window.addEventListener("resize", () => setDims(getSlicesDims()))
     }
-  }, [data, dims])
+  }, [data, dims, id])
 
   const { dragBind, moveBind, onClick } = useGesture(
     dims,
     data.length,
+    activeIndex,
     setActiveIndex
   )
   if (!dragBind || !moveBind || !onClick) {
     return <></>
+  }
+
+  if (id && activeIndex !== null) {
+    setActiveIndex(null)
   }
 
   return (
@@ -57,10 +62,7 @@ export default function Carousel(props) {
         {data.map((item, i) => (
           <Slice
             onHover={() => setActiveIndex(i)}
-            onClick={() => {
-              history.push(`/${item.id}`)
-              setActiveIndex(null)
-            }}
+            onClick={() => history.push(`/${item.id}`)}
             item={{ ...item, i }}
             parentDims={dims || getSlicesDims()}
             vertical={dims && dims.vertical}

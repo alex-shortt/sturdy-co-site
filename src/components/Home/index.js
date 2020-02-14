@@ -33,12 +33,12 @@ const Footer = styled(FooterBase)`
 `
 
 export default function Home(props) {
-  const { data, ...restProps } = props
+  const { data, id, ...restProps } = props
 
   return (
     <Container {...restProps}>
       <Logo />
-      <Carousel data={data} {...restProps} />
+      <Carousel data={data} id={id} {...restProps} />
       <Footer />
     </Container>
   )

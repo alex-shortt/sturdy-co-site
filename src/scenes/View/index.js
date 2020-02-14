@@ -58,7 +58,7 @@ export default function View(props) {
   return (
     <>
       <IntroVideo shiftAmount={shiftPos} onClick={hideIntro} />
-      <Home shiftAmount={shiftPos} data={data} {...props} />
+      <Home shiftAmount={shiftPos} data={data} id={id} {...props} />
       <Client id={id} data={data} shiftAmount={shiftPos} />
     </>
   )

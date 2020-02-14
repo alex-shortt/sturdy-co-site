@@ -56,7 +56,6 @@ const Text = styled.div`
     user-select: none;
     white-space: nowrap;
     cursor: default;
-    padding: 5px;
   }
 
   & span,
@@ -78,7 +77,7 @@ const Text = styled.div`
     right: 0;
     bottom: 0;
     pointer-events: none;
-    opacity: 0.95;
+    opacity: 0.999;
   }
 
   & span:before {

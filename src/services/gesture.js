@@ -1,41 +1,60 @@
 import React, { useCallback } from "react"
 import { useDrag, useMove } from "react-use-gesture"
 
-export function useGesture(dims, numSlices, setActiveIndex) {
-  const handleGesture = useCallback(
-    ({ movement: [mx, my], xy: [x, y], hover, drag, click }) => {
-      let newIndex = -1
+export function useGesture(dims, numSlices, activeIndex, setActiveIndex) {
+  const updateActiveIndex = useCallback(
+    (x, y) => {
+      const newIndex = getIndexFromPos(x, y, numSlices, dims)
 
-      const moved = mx !== 0 || my !== 0
-      const inCarouselBounds = isInBounds(x, y, dims)
-
-      if (!moved || hover) {
-        if (!inCarouselBounds && drag) {
-          newIndex = null
-        } else if (inCarouselBounds) {
-          newIndex = getIndexFromPos(x, y, numSlices, dims)
-        } else {
-          newIndex = null
-        }
-      } else {
-        newIndex = getIndexFromPos(x, y, numSlices, dims)
-      }
-
-      if (newIndex !== -1) {
+      if (newIndex !== activeIndex) {
         setActiveIndex(newIndex)
       }
     },
-    [dims, numSlices, setActiveIndex]
+    [activeIndex, dims, numSlices, setActiveIndex]
   )
 
-  const dragBind = useDrag(payload => handleGesture({ drag: true, ...payload }))
+  const handleDrag = useCallback(
+    ({ movement: [mx, my], xy: [x, y], down }) => {
+      const moved = mx !== 0 || my !== 0
 
-  const moveBind = useMove(payload =>
-    handleGesture({ hover: true, ...payload })
+      if (!moved || !down) {
+        return
+      }
+
+      updateActiveIndex(x, y)
+    },
+    [updateActiveIndex]
   )
+  const dragBind = useDrag(payload => handleDrag(payload))
 
-  const onClick = e =>
-    handleGesture({ movement: [0, 0], xy: [e.clientX, e.clientY], click: true })
+  const handleMove = useCallback(
+    ({ movement: [mx, my], xy: [x, y] }) => {
+      const inCarouselBounds = isInBounds(x, y, dims)
+
+      if (!inCarouselBounds) {
+        setActiveIndex(null)
+      }
+
+      updateActiveIndex(x, y)
+    },
+    [dims, setActiveIndex, updateActiveIndex]
+  )
+  const moveBind = useMove(payload => handleMove(payload))
+
+  const handleClick = useCallback(
+    ({ clientX: x, clientY: y, target }) => {
+      const inCarouselBounds = isInBounds(x, y, dims)
+
+      if (!inCarouselBounds) {
+        setActiveIndex(null)
+        return
+      }
+
+      updateActiveIndex(x, y)
+    },
+    [dims, setActiveIndex, updateActiveIndex]
+  )
+  const onClick = e => handleClick(e)
 
   return { dragBind, moveBind, onClick }
 }

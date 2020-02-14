@@ -87,7 +87,7 @@ const Info = styled.div`
 const Logo = styled.img.attrs({ src: sturdyImg })`
   margin-bottom: 15px;
   width: 180px;
-  height: auto;
+  height: 100%;
   object-fit: contain;
   object-position: top center;
 
