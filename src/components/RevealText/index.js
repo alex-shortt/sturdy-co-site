@@ -36,7 +36,19 @@ const revealerText = keyframes`
   }
 `
 
+const fadeIn = keyframes`
+  from { opacity: 0; }
+  to { opacity: 1; }
+`
+
 const Text = styled.div`
+  opacity: 0;
+  animation-iteration-count: 1;
+  animation-duration: 50ms;
+  animation-delay: 200ms;
+  animation-fill-mode: both;
+  animation-name: ${fadeIn};
+
   & span {
     position: relative;
     z-index: 2;
@@ -84,20 +96,20 @@ const Text = styled.div`
   }
 
   & span:first-child:before {
-    animation-delay: 0.15s;
+    animation-delay: 0.25s;
   }
 
   & span:first-child:after {
-    animation-delay: 0.15s;
+    animation-delay: 0.25s;
     // background-color: #bd2243;
   }
 
   & span:nth-child(2):before {
-    animation-delay: 0.6s;
+    animation-delay: 0.7s;
   }
 
   & span:nth-child(2):after {
-    animation-delay: 0.6s;
+    animation-delay: 0.7s;
     //background-color: #fde42f;
   }
 `

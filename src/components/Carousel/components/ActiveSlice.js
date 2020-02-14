@@ -6,7 +6,6 @@ import RevealText from "components/RevealText"
 
 const Wrapper = styled(animated.div)`
   position: absolute;
-  pointer-events: none;
   transform-style: preserve-3d;
   top: 50%;
   left: ${props => props.pos * 100}%;
