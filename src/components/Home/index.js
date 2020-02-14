@@ -7,7 +7,6 @@ import FooterBase from "components/Footer"
 
 const Container = styled.div`
   max-width: 1400px;
-  padding: 0 180px;
   margin: 0 auto;
   box-sizing: border-box;
 
@@ -18,14 +17,6 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
-  @media screen and (max-width: 700px) {
-    padding: 0 140px;
-  }
-
-  @media screen and (max-width: 700px) {
-    padding: 0;
-  }
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`
