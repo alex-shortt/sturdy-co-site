@@ -33,10 +33,12 @@ const Content = styled.div`
   position: relative;
   transform-style: flat;
   user-select: none;
+  pointer-events: ${props => (props.active ? "all" : "none")};
+  cursor: pointer;
 `
 
 export default function ActiveSlice(props) {
-  const { data, item, parentDims, activeIndex } = props
+  const { data, item, parentDims, activeIndex, onClick } = props
 
   const { i, title, subtitle, color } = item
   const { width: WIDTH, height: HEIGHT } = parentDims
@@ -71,7 +73,7 @@ export default function ActiveSlice(props) {
   return (
     <Wrapper style={wrapperStyle} pos={pos}>
       <Container style={containerStyle}>
-        <Content active={active}>
+        <Content active={active} onClick={onClick}>
           {active && (
             <RevealText title={title} subtitle={subtitle} color={color} />
           )}

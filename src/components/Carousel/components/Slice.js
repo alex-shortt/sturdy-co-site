@@ -15,7 +15,6 @@ const Hit = styled.div`
 export default function Slice(props) {
   const {
     item: { i },
-    onHover,
     activeIndex,
     onClick,
     vertical
@@ -27,10 +26,5 @@ export default function Slice(props) {
     return <VerticalActiveSlice onClick={handleClick} {...props} />
   }
 
-  return (
-    <>
-      <Hit onMouseMove={onHover} onClick={handleClick} vertical={vertical} />
-      <ActiveSlice {...props} />
-    </>
-  )
+  return <ActiveSlice onClick={handleClick} {...props} />
 }

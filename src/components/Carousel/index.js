@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components/macro"
-import { useDrag } from "react-use-gesture"
+import { useDrag, useMove } from "react-use-gesture"
 
 import Slice from "./components/Slice"
 
@@ -34,17 +34,12 @@ export default function Carousel(props) {
     if (!dims) {
       setDims(getSlicesDims())
       window.addEventListener("resize", () => setDims(getSlicesDims()))
-      window.addEventListener("mousemove", e => {
-        if (!isDescendant(containerRef.current, e.target)) {
-          setActiveIndex(null)
-        }
-      })
     }
   }, [data, dims])
 
   const handleDrag = useCallback(
-    ({ movement: [mx, my], xy: [x, y] }) => {
-      const { width, height } = dims
+    ({ movement: [mx, my], xy: [x, y], hover }) => {
+      const { width, height, vertical } = dims
 
       const minX = window.innerWidth / 2 - width / 2
       const maxX = minX + width
@@ -59,42 +54,63 @@ export default function Carousel(props) {
           yPerc = 0
         }
         if (yPerc >= 1) {
-          yPerc = 0.9
+          yPerc = 0.99
         }
 
-        const sliceIndex = Math.floor(yPerc * data.length)
+        let xPerc = (x - minX) / width
+
+        if (xPerc < 0) {
+          xPerc = 0
+        }
+        if (xPerc >= 1) {
+          xPerc = 0.99
+        }
+
+        const sliceIndex = Math.floor((vertical ? yPerc : xPerc) * data.length)
+
+        if (sliceIndex === activeIndex) {
+          return
+        }
+        console.log(sliceIndex)
         setActiveIndex(sliceIndex)
       }
 
       // tapped
-      if (mx === 0 && my === 0) {
+      if ((mx === 0 && my === 0) || hover) {
         if (x > minX && x < maxX && y > minY && y < maxY) {
           updateIndex()
+        } else {
+          setActiveIndex(null)
         }
         return
       }
 
       updateIndex()
     },
-    [data.length, dims]
+    [data.length, dims, activeIndex]
   )
 
-  const bind = useDrag(payload => {
+  const dragBind = useDrag(payload => {
     if (payload.movement[0] === 0 && payload.movement[1] === 0) {
       return
     }
     handleDrag(payload)
   })
 
+  const moveBind = useMove(payload => {
+    handleDrag({ hover: true, ...payload })
+  })
+
   const handleClick = e =>
     handleDrag({ movement: [0, 0], xy: [e.clientX, e.clientY] })
 
   return (
-    <DragLocation {...bind()} onClick={handleClick}>
+    <DragLocation {...dragBind()} onClick={handleClick}>
       <Container
         style={dims}
         ref={containerRef}
         vertical={dims && dims.vertical}
+        {...moveBind()}
       >
         {data.map((item, i) => (
           <Slice
@@ -130,15 +146,4 @@ const getSlicesDims = () => {
   }
 
   return { width, height: width * ratio }
-}
-
-const isDescendant = (parent, child) => {
-  let node = child.parentNode
-  while (node != null) {
-    if (node === parent) {
-      return true
-    }
-    node = node.parentNode
-  }
-  return false
 }

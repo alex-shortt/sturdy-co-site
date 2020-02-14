@@ -11,6 +11,7 @@ const Wrapper = styled(animated.div)`
   top: ${props => props.pos * 100}%;
   transition: width 350ms ease-out, height 350ms ease-out;
   overflow: hidden;
+  pointer-events: none;
 `
 
 const Container = styled(animated.div)`
@@ -33,6 +34,7 @@ const Content = styled.div`
   transform-style: flat;
   user-select: none;
   pointer-events: ${props => (props.active ? "all" : "none")};
+  cursor: pointer;
 `
 
 export default function VerticalActiveSlice(props) {
