@@ -42,16 +42,13 @@ const Text = styled.div`
     display: block;
     user-select: none;
     animation-name: ${revealText};
-    color: white;
-    font-size: 2em;
-
     white-space: nowrap;
     cursor: default;
   }
   & span,
   & span:after {
     animation-iteration-count: 1;
-    animation-duration: 750ms;
+    animation-duration: 650ms;
     animation-fill-mode: both;
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
@@ -72,20 +69,20 @@ const Text = styled.div`
   }
 
   & span:first-child {
-    animation-delay: 0.25s;
+    animation-delay: 0.15s;
   }
 
   & span:first-child:after {
-    animation-delay: 0.25s;
+    animation-delay: 0.15s;
     // background-color: #bd2243;
   }
 
   & span:nth-child(2) {
-    animation-delay: 0.75s;
+    animation-delay: 0.6s;
   }
 
   & span:nth-child(2):after {
-    animation-delay: 0.75s;
+    animation-delay: 0.6s;
     //background-color: #fde42f;
   }
 `
@@ -94,17 +91,31 @@ const Title = styled.span`
   text-transform: uppercase;
   color: white;
   margin: 0;
-  font-size: 1.5rem;
+  font-size: 1.75rem;
   letter-spacing: 2px;
   font-weight: 900;
+
+  @media screen and (max-width: 1100px) {
+    font-size: 1.4rem;
+    letter-spacing: 1.5px;
+  }
+
+  @media screen and (max-width: 850px) {
+    font-size: 1.25rem;
+    letter-spacing: 1px;
+  }
 `
 
 const Subtitle = styled.span`
   text-transform: uppercase;
   font-weight: 100;
-  margin: 2px 0 0;
   color: white;
-  font-size: 0.75rem;
+  font-size: 1rem;
+  padding: 4px 0;
+
+  @media screen and (max-width: 1100px) {
+    font-size: 0.75rem;
+  }
 `
 
 export default function RevealText(props) {
