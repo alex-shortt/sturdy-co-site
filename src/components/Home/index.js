@@ -1,7 +1,6 @@
 import React from "react"
 import styled from "styled-components/macro"
 
-import Helmet from "components/Helmet"
 import Carousel from "components/Carousel"
 import sturdyImg from "assets/images/logo.png"
 import FooterBase from "components/Footer"
@@ -26,7 +25,7 @@ const Container = styled.div`
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`
-  height: calc(70px + 3vw);
+  height: calc(50px + 5vw);
   width: 100%;
   object-fit: contain;
   position: absolute;

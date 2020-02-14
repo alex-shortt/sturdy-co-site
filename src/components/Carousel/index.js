@@ -58,7 +58,7 @@ const getSlicesDims = () => {
   const width = Math.min(window.innerWidth * 0.7, 900)
 
   if (windowWidth < 750) {
-    const height = window.innerHeight - 400
+    const height = window.innerHeight - 75 - 55 - 135 - 60 // logo, header, footer, padding
     return {
       width: Math.min(width, (height * ratio * 3) / 2),
       height,

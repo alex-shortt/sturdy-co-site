@@ -10,9 +10,10 @@ const Container = styled.div`
 
 const Tag = styled.h4`
   line-height: 1.5em;
+  margin: 0.8em 0;
 
   @media screen and (max-width: 700px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `
 
@@ -24,6 +25,8 @@ const Info = styled.h4`
 
   @media screen and (max-width: 700px) {
     font-size: 0.8rem;
+    margin-top: 0.8rem;
+    margin-bottom: 0.8rem;
   }
 `
 
