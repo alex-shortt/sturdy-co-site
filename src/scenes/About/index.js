@@ -30,7 +30,7 @@ export default function About(props) {
       <Helmet title="About" />
       <h1>ABOUT</h1>
       <br />
-      <h3>
+      <h3 style={{ fontWeight: 300 }}>
         We provide comprehensive direction on all things visual: Branding, Album
         Art, Videos, Photography, and the Live Experience.
         <br />
@@ -44,9 +44,11 @@ export default function About(props) {
         <br />
         <br />
         VIDEO: We conceptualize, direct, and produce videos representative to
-        the artist’s music and vision.LIVE: We work with artists to create a
-        visually striking live experience, including stage design, lighting and
-        stage visuals.
+        the artist’s music and vision.
+        <br />
+        <br />
+        LIVE: We work with artists to create a visually striking live
+        experience, including stage design, lighting and stage visuals.
         <br />
         <br />
         MERCH DESIGN: We work with our team of designers to craft merchandise

@@ -22,6 +22,10 @@ const Wrapper = styled.div`
   margin: 0 auto;
   box-sizing: border-box;
 
+  @media screen and (max-width: 900px) {
+    padding: 0 60px 0 180px;
+  }
+
   @media screen and (max-width: 700px) {
     padding: 0 40px 0 140px;
   }
@@ -63,7 +67,7 @@ const Credits = styled.h3`
   text-transform: uppercase;
 
   @media screen and (max-width: 700px) {
-    font-size: 1rem;
+    font-size: 0.9rem;
   }
 `
 
@@ -76,7 +80,7 @@ const Info = styled.div`
   position: relative;
   box-sizing: border-box;
   flex: 1;
-  margin-right: 5px;
+  margin-right: 10px;
   min-width: 60%;
 `
 
@@ -86,6 +90,10 @@ const Logo = styled.img.attrs({ src: sturdyImg })`
   height: auto;
   object-fit: contain;
   object-position: top center;
+
+  @media screen and (max-width: 700px) {
+    width: 120px;
+  }
 `
 
 export default function Client(props) {
