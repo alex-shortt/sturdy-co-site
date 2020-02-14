@@ -9,7 +9,7 @@ const Container = styled.div`
   overflow-y: auto;
   top: 0;
   z-index: 3;
-  padding-top: 60px;
+  padding-top: 40px;
   box-sizing: border-box;
 `
 
@@ -37,7 +37,7 @@ export default function Gallery(props) {
     if (formatted.length === 0) {
       loadImages()
     }
-  }, [formatted, images])
+  }, [formatted, images, window.innerWidth])
 
   return (
     <Container>
@@ -45,7 +45,7 @@ export default function Gallery(props) {
         <GridGallery
           images={formatted}
           enableImageSelection={false}
-          rowHeight={500}
+          rowHeight={350}
           backdropClosesModal
         />
       ) : (

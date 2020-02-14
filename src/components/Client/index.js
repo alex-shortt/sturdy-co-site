@@ -21,20 +21,38 @@ const Wrapper = styled.div`
   padding: 0 180px;
   margin: 0 auto;
   box-sizing: border-box;
+
+  @media screen and (max-width: 700px) {
+    padding: 0 40px 0 140px;
+  }
+
+  @media screen and (max-width: 575px) {
+    padding: 0 30px;
+  }
 `
 
 const Title = styled.h1`
-  margin: 0 0 0.25em;
+  display: inline-block;
+  margin: 0 0.25em 5px 0;
   font-size: 3rem;
   text-transform: uppercase;
   letter-spacing: 3px;
+
+  @media screen and (max-width: 700px) {
+    font-size: 2rem;
+  }
 `
 
-const Subtitle = styled.span`
+const Subtitle = styled.p`
+  display: inline-block;
   letter-spacing: normal;
   font-weight: 100;
   font-size: 1.25rem;
-  margin-left: 10px;
+  margin: 0 0 5px;
+
+  @media screen and (max-width: 700px) {
+    font-size: 1rem;
+  }
 `
 
 const Credits = styled.h3`
@@ -43,21 +61,31 @@ const Credits = styled.h3`
   line-height: 1.2;
   font-size: 1.15rem;
   text-transform: uppercase;
+
+  @media screen and (max-width: 700px) {
+    font-size: 1rem;
+  }
+`
+
+const TopBox = styled.div`
+  display: flex;
+  flex-wrap: wrap-reverse;
 `
 
 const Info = styled.div`
-  width: 100%;
-  padding-right: 180px;
   position: relative;
   box-sizing: border-box;
+  flex: 1;
+  margin-right: 5px;
+  min-width: 60%;
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`
+  margin-bottom: 15px;
   width: 180px;
   height: auto;
-  position: absolute;
-  right: 0;
-  top: 0;
+  object-fit: contain;
+  object-position: top center;
 `
 
 export default function Client(props) {
@@ -81,21 +109,21 @@ export default function Client(props) {
     <Container {...restProps} ref={container}>
       {client && (
         <Wrapper>
-          <Info>
-            <Title>
-              {title}
+          <TopBox>
+            <Info>
+              <Title>{title}</Title>
               <Subtitle>{subtitle}</Subtitle>
-            </Title>
-            <Credits>
-              {credits.split("\n").map(cred => (
-                <React.Fragment key={cred}>
-                  {cred}
-                  <br />
-                </React.Fragment>
-              ))}
-            </Credits>
+              <Credits>
+                {credits.split("\n").map(cred => (
+                  <React.Fragment key={cred}>
+                    {cred}
+                    <br />
+                  </React.Fragment>
+                ))}
+              </Credits>
+            </Info>
             <Logo />
-          </Info>
+          </TopBox>
           <Gallery images={images} />
         </Wrapper>
       )}

@@ -11,6 +11,20 @@ const Container = styled.div`
   background: black;
   padding: 20px 0 0 20px;
   z-index: 4;
+
+  @media screen and (max-width: 700px) {
+    margin-left: 20px;
+  }
+
+  @media screen and (max-width: 575px) {
+    margin: 0;
+    padding: 5px 0;
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    box-sizing: border-box;
+    border-bottom: 1px solid white;
+  }
 `
 
 const Link = styled(LinkBase)`
@@ -30,6 +44,15 @@ const Link = styled(LinkBase)`
 
   &:hover {
     ${props => !props.match && "color: #acacac;"};
+  }
+
+  @media screen and (max-width: 700px) {
+    font-size: 1rem;
+  }
+
+  @media screen and (max-width: 575px) {
+    margin: 0;
+    padding: 10px 15px;
   }
 `
 

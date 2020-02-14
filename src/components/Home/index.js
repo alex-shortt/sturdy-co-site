@@ -19,6 +19,10 @@ const Container = styled.div`
   flex-direction: column;
   justify-content: center;
   align-items: center;
+
+  @media screen and (max-width: 700px) {
+    padding: 0 140px;
+  }
 `
 
 const Logo = styled.img.attrs({ src: sturdyImg })`

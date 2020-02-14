@@ -10,6 +10,14 @@ const Container = styled.div`
   margin: 60px auto 0;
   height: 100%;
   box-sizing: border-box;
+
+  @media screen and (max-width: 700px) {
+    padding: 0 140px;
+  }
+
+  @media screen and (max-width: 575px) {
+    padding: 0 30px;
+  }
 `
 
 export default function About(props) {

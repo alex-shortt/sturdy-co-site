@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react"
 import styled, { css } from "styled-components/macro"
 
-import Helmet from "components/Helmet"
 import clients from "assets/data/clients"
 import ClientBase from "components/Client"
 import IntroVideoBase from "components/IntroVideo"
