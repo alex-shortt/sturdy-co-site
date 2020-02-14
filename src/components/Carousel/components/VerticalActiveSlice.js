@@ -11,7 +11,6 @@ const Wrapper = styled(animated.div)`
   top: ${props => props.pos * 100}%;
   transition: width 350ms ease-out, height 350ms ease-out;
   overflow: hidden;
-  pointer-events: none;
   pointer-events: all;
 `
 

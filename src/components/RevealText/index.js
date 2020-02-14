@@ -2,11 +2,18 @@ import React from "react"
 import styled, { keyframes } from "styled-components/macro"
 
 const revealText = keyframes`
-  from {
-    clip-path: inset(0 100% 0 0);
+   0%, 50% {
+    transform: scaleX(1);
+    transform-origin: 100% 50%;
   }
-  to {
-    clip-path: inset(0 0 0 0);
+  
+  60% {
+    transform: scaleX(1);
+  }
+  
+  100% {
+    transform-origin: 100% 50%;
+    transform: scaleX(0);
   }
 `
 
@@ -30,22 +37,18 @@ const revealerText = keyframes`
 `
 
 const Text = styled.div`
-  -webkit-font-smoothing: antialiased;
-
-  & > * {
-    -webkit-font-smoothing: antialiased;
-  }
-
   & span {
     position: relative;
     z-index: 2;
     display: block;
     user-select: none;
-    animation-name: ${revealText};
     white-space: nowrap;
     cursor: default;
+    padding: 5px;
   }
+
   & span,
+  & span:before,
   & span:after {
     animation-iteration-count: 1;
     animation-duration: 650ms;
@@ -53,6 +56,7 @@ const Text = styled.div`
     animation-timing-function: cubic-bezier(0, 0, 0.2, 1);
   }
 
+  & span:before,
   & span:after {
     content: "";
     position: absolute;
@@ -61,14 +65,25 @@ const Text = styled.div`
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: white;
-    transform: scaleX(0);
-    transform-origin: 0 50%;
     pointer-events: none;
-    animation-name: ${revealerText};
+    opacity: 0.95;
   }
 
-  & span:first-child {
+  & span:before {
+    background-color: ${props => props.color};
+    animation-name: ${revealText};
+    transform: scaleX(1);
+    transform-origin: 0 100%;
+  }
+
+  & span:after {
+    background-color: white;
+    animation-name: ${revealerText};
+    transform: scaleX(0);
+    transform-origin: 0 50%;
+  }
+
+  & span:first-child:before {
     animation-delay: 0.15s;
   }
 
@@ -77,7 +92,7 @@ const Text = styled.div`
     // background-color: #bd2243;
   }
 
-  & span:nth-child(2) {
+  & span:nth-child(2):before {
     animation-delay: 0.6s;
   }
 
