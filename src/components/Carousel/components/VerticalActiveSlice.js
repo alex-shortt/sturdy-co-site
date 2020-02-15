@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components/macro"
 import { useSpring, animated } from "react-spring"
+import pSBC from "shade-blend-color"
 
 import RevealText from "components/RevealText"
 
@@ -10,7 +11,7 @@ const Wrapper = styled(animated.div)`
   left: 50%;
   top: ${props => props.pos * 100}%;
   transition: width 350ms ease-out, height 350ms ease-out;
-  overflow: hidden;
+  //overflow: hidden;
   pointer-events: all;
 `
 
@@ -155,10 +156,12 @@ const calcContainerStyle = props => {
     containerStyle.backgroundColor = color
     containerStyle.filter.push("blur(0px)")
   } else if (activeIndex !== null) {
-    // effects
-    containerStyle.backgroundColor = `rgb(${grayscale}, ${grayscale}, ${grayscale})`
+    // another one is active
+    const activeColor = data[activeIndex].color
+    containerStyle.backgroundColor = pSBC(1 - Math.max(linear, 0), activeColor)
     containerStyle.filter.push(`blur(${2 * (1 - linear)}px)`)
   } else {
+    // none are active
     containerStyle.backgroundColor = `rgb(${grayscale}, ${grayscale}, ${grayscale})`
   }
 

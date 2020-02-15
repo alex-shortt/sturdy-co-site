@@ -83,6 +83,7 @@
     "react-scripts": "2.1.8",
     "react-spring": "^8.0.27",
     "react-use-gesture": "^7.0.4",
+    "shade-blend-color": "^1.0.0",
     "styled-components": "^4.2.0",
     "typeface-roboto": "^0.0.54",
     "use-deep-compare-effect": "^1.2.0",
