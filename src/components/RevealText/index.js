@@ -54,8 +54,9 @@ const Text = styled.div`
     z-index: 2;
     display: block;
     user-select: none;
-    white-space: nowrap;
     cursor: default;
+    white-space: normal;
+    margin: 0 5px;
   }
 
   & span,
