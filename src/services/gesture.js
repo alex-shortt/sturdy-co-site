@@ -33,6 +33,7 @@ export function useGesture(dims, numSlices, activeIndex, setActiveIndex) {
 
       if (!inCarouselBounds) {
         setActiveIndex(null)
+        return
       }
 
       updateActiveIndex(x, y)
