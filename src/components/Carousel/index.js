@@ -1,9 +1,10 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components/macro"
 
 import { useGesture } from "services/gesture"
 
 import Slice from "./components/Slice"
+import IntroSlices from "./components/IntroSlices"
 
 const DragLocation = styled.div`
   width: 100%;
@@ -24,11 +25,11 @@ const Container = styled.div`
 `
 
 export default function Carousel(props) {
-  const { data, id, history } = props
+  const { data, id, shiftPos, history } = props
 
+  const [showCarouselIntro, setShowCarouselIntro] = useState(true)
   const [dims, setDims] = useState(null)
   const [activeIndex, setActiveIndex] = useState(null)
-  const containerRef = useRef()
 
   useEffect(() => {
     if (!dims) {
@@ -51,18 +52,28 @@ export default function Carousel(props) {
     setActiveIndex(null)
   }
 
+  if (showCarouselIntro && shiftPos === 1) {
+    return (
+      <DragLocation>
+        <Container style={dims} vertical={dims && dims.vertical}>
+          <IntroSlices
+            delay={750}
+            data={data}
+            parentDims={dims || getSlicesDims()}
+            onEnd={() => setShowCarouselIntro(false)}
+            vertical={dims && dims.vertical}
+          />
+        </Container>
+      </DragLocation>
+    )
+  }
+
   return (
     <DragLocation {...dragBind()} onClick={onClick}>
-      <Container
-        style={dims}
-        ref={containerRef}
-        vertical={dims && dims.vertical}
-        {...moveBind()}
-      >
+      <Container style={dims} vertical={dims && dims.vertical} {...moveBind()}>
         {data.map((item, i) => (
           <Slice
             key={item.id}
-            onHover={() => setActiveIndex(i)}
             onClick={() => history.push(`/${item.id}`)}
             item={{ ...item, i }}
             parentDims={dims || getSlicesDims()}

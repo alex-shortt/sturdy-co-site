@@ -108,7 +108,7 @@ export const calcContainerStyle = props => {
 
   const active = activeIndex === i
   const pos = i / (data.length - 1)
-  const grayscale = pos * 175 + 40
+  const grayscale = calcGrayscale(pos)
   const dist = Math.abs(activeIndex - i)
   const maxDist = Math.floor(data.length * 0.6)
   const linear = -dist / maxDist + 1
@@ -135,3 +135,5 @@ export const calcContainerStyle = props => {
 
   return containerStyle
 }
+
+export const calcGrayscale = pos => pos * 175 + 40

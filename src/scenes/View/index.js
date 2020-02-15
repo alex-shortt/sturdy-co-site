@@ -34,9 +34,9 @@ export default function View(props) {
     match: {
       params: { id }
     },
-    skipIntro,
+    skipIntro, // whether to show the intro on route /
     onLoad,
-    hideIntro
+    hideIntro // function to hide the intro on a specific page load
   } = props
 
   if (onLoad) {
@@ -60,7 +60,13 @@ export default function View(props) {
     <>
       {shiftPos !== 2 && <Helmet title="Sturdy" />}
       <IntroVideo shiftAmount={shiftPos} onClick={hideIntro} />
-      <Home shiftAmount={shiftPos} data={data} id={id} {...props} />
+      <Home
+        shiftAmount={shiftPos}
+        shiftPos={shiftPos}
+        data={data}
+        id={id}
+        {...props}
+      />
       <Client id={id} data={data} shiftAmount={shiftPos} />
     </>
   )
