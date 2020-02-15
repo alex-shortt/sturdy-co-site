@@ -75,11 +75,7 @@ export default function Footer(props) {
 
   return (
     <Container {...restProps}>
-      <Tag>
-        CREATIVE HOUSE & DIGITAL DELVE
-        <br />
-        EST. 2018
-      </Tag>
+      <Tag>CREATIVE HOUSE & DIGITAL DELVE EST. 2018</Tag>
       <Info>
         <Anchor href="https://instagram.com/sturdy.co" about="_blank">
           <IG />
