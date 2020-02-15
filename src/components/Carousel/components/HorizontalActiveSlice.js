@@ -3,16 +3,16 @@ import styled from "styled-components/macro"
 import { useSpring } from "react-spring"
 
 import RevealText from "components/RevealText"
-import { calcVerticalWrapperPos, calcContainerStyle } from "services/slice"
+import { calcHorizontalWrapperPos, calcContainerStyle } from "services/slice"
 
 import { Container, Content, WrapperBase } from "./SliceCommon"
 
 const Wrapper = styled(WrapperBase)`
-  left: 50%;
-  top: ${props => props.pos * 100}%;
+  top: 50%;
+  left: ${props => props.pos * 100}%;
 `
 
-export default function VerticalActiveSlice(props) {
+export default function HorizontalActiveSlice(props) {
   const { data, item, parentDims, activeIndex, onMouseDown } = props
   const { i, title, subtitle, color } = item
   const { width: WIDTH, height: HEIGHT } = parentDims
@@ -21,17 +21,17 @@ export default function VerticalActiveSlice(props) {
   const pos = i / (data.length - 1)
 
   const [wrapperPos, setWrapperPos] = useSpring(() => ({
-    wh: [WIDTH, HEIGHT / data.length],
-    yrXz: [0, 0, 0],
+    wh: [WIDTH / data.length, HEIGHT],
+    xrYz: [0, 0, 0],
     config: { mass: 2, tension: 400, friction: 60 }
   }))
 
   // update styles
   const containerStyle = calcContainerStyle(props)
-  const newWrapperStyle = calcVerticalWrapperPos(props)
+  const newWrapperStyle = calcHorizontalWrapperPos(props)
   setWrapperPos(newWrapperStyle)
 
-  // interpolate wrapper style
+  // interpolate values
   const wrapperStyle = interpolateWrapperStyle(wrapperPos, props)
 
   return (
@@ -58,19 +58,17 @@ const interpolateWrapperStyle = (wrapperPos, props) => {
 
   // interpolate wrapper style
   const wrapperStyle = {}
-  wrapperStyle.transform = wrapperPos.yrXz.interpolate(
-    (y, rx, z) =>
-      "translateX(-50%)" +
-      `translateY(-${pos * 100}%)` +
+  wrapperStyle.transform = wrapperPos.xrYz.interpolate(
+    (x, ry, z) =>
+      "translateY(-50%)" +
+      `translateX(-${pos * 100}%)` +
       "scale(1.03)" +
       "translateZ(-20px)" +
-      `translate3d(0, ${y}px, ${z}px)` +
-      `rotateX(${rx}deg)`
+      `translate3d(${x}px, 0, ${z}px)` +
+      `rotateY(${ry}deg)`
   )
-  wrapperStyle.width = active ? WIDTH * 1.05 : WIDTH
-  wrapperStyle.height = active
-    ? (HEIGHT * 3) / data.length
-    : HEIGHT / data.length
+  wrapperStyle.width = active ? HEIGHT * 1.1 : WIDTH / data.length
+  wrapperStyle.height = active ? HEIGHT * 1.1 : HEIGHT
 
   return wrapperStyle
 }

@@ -1,16 +1,7 @@
 import React from "react"
-import styled from "styled-components/macro"
 
-import ActiveSlice from "./ActiveSlice"
+import HorizontalActiveSlice from "./HorizontalActiveSlice"
 import VerticalActiveSlice from "./VerticalActiveSlice"
-
-const Hit = styled.div`
-  flex: 1;
-  ${props => (props.vertical ? "width: 100%" : "height: 100%")};
-  cursor: pointer;
-  transition: 0.25s linear;
-  position: relative;
-`
 
 export default function Slice(props) {
   const {
@@ -23,8 +14,8 @@ export default function Slice(props) {
   const handleClick = i === activeIndex ? onClick : undefined
 
   if (vertical) {
-    return <VerticalActiveSlice {...props} onMouseDown={handleClick} />
+    return <VerticalActiveSlice onMouseDown={handleClick} {...props} />
   }
 
-  return <ActiveSlice onClick={handleClick} {...props} />
+  return <HorizontalActiveSlice onMouseDown={handleClick} {...props} />
 }
