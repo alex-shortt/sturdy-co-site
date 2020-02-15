@@ -20,8 +20,16 @@ const GoogleAnalytics = () => {
 
 export default function App() {
   const [skipIntro, setSkipIntro] = useState(false)
+  const [printedCredits, setPrintedCredits] = useState(false)
 
   const hideIntro = () => setSkipIntro(true)
+
+  useEffect(() => {
+    if (!printedCredits) {
+      printCredits()
+      setPrintedCredits(true)
+    }
+  }, [printedCredits])
 
   return (
     <>
@@ -59,4 +67,20 @@ export default function App() {
       </React.Suspense>
     </>
   )
+}
+
+function printCredits() {
+  const credits = `
+  
+   ______     ______   __  __     ______     _____     __  __       
+  /\\  ___\\   /\\__  _\\ /\\ \\/\\ \\   /\\  == \\   /\\  __-.  /\\ \\_\\ \\      
+  \\ \\___  \\  \\/_/\\ \\/ \\ \\ \\_\\ \\  \\ \\  __<   \\ \\ \\/\\ \\ \\ \\____ \\     
+   \\/\\_____\\    \\ \\_\\  \\ \\_____\\  \\ \\_\\ \\_\\  \\ \\____-  \\/\\_____\\    
+    \\/_____/     \\/_/   \\/_____/   \\/_/ /_/   \\/____/   \\/_____/    
+
+  Website by Alex Shortt
+      https://instagram.com/alexander.shortt
+      https://twitter.com/_alexshortt
+  `
+  console.log(credits)
 }
