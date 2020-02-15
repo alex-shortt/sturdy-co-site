@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components/macro"
 
 import sturdyImg from "assets/images/logo.png"
+import Helmet from "components/Helmet"
 
 import Gallery from "./components/Gallery"
 
@@ -117,6 +118,7 @@ export default function Client(props) {
     <Container {...restProps} ref={container}>
       {client && (
         <Wrapper>
+          <Helmet title={`${title} | Sturdy`} />
           <TopBox>
             <Info>
               <Title>{title}</Title>

@@ -27,7 +27,7 @@ export default function About(props) {
 
   return (
     <Container>
-      <Helmet title="About" />
+      <Helmet title="About | Sturdy" />
       <h1>ABOUT</h1>
       <br />
       <h3 style={{ fontWeight: 300 }}>

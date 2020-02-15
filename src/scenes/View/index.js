@@ -6,6 +6,7 @@ import ClientBase from "components/Client"
 import IntroVideoBase from "components/IntroVideo"
 import HomeBase from "components/Home"
 import { useData } from "services/data"
+import Helmet from "components/Helmet"
 
 const shiftAnimation = css`
   transition: transform 1250ms ease-in-out;
@@ -57,6 +58,7 @@ export default function View(props) {
 
   return (
     <>
+      {shiftPos !== 2 && <Helmet title="Sturdy" />}
       <IntroVideo shiftAmount={shiftPos} onClick={hideIntro} />
       <Home shiftAmount={shiftPos} data={data} id={id} {...props} />
       <Client id={id} data={data} shiftAmount={shiftPos} />
