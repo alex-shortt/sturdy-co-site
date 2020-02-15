@@ -61,6 +61,7 @@ export default function Carousel(props) {
       >
         {data.map((item, i) => (
           <Slice
+            key={item.id}
             onHover={() => setActiveIndex(i)}
             onClick={() => history.push(`/${item.id}`)}
             item={{ ...item, i }}
