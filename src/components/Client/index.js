@@ -22,6 +22,9 @@ const Wrapper = styled.div`
   padding: 0 180px;
   margin: 0 auto;
   box-sizing: border-box;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 
   @media screen and (max-width: 900px) {
     padding: 0 60px 0 180px;
@@ -75,6 +78,7 @@ const CreditsContainer = styled.h3`
 const TopBox = styled.div`
   display: flex;
   flex-wrap: wrap-reverse;
+  align-items: flex-end;
 `
 
 const Info = styled.div`
@@ -88,7 +92,6 @@ const Info = styled.div`
 const Logo = styled.img.attrs({ src: sturdyImg })`
   margin-bottom: 15px;
   width: 180px;
-  height: 100%;
   object-fit: contain;
   object-position: top center;
 
@@ -146,7 +149,7 @@ export default function Client(props) {
             </Info>
             <Logo />
           </TopBox>
-          <Gallery images={images} />
+          <Gallery media={images} />
         </Wrapper>
       )}
     </Container>

@@ -1,72 +1,64 @@
-import React, { useState, useEffect } from "react"
+import React, { useRef } from "react"
 import styled from "styled-components/macro"
-import GridGallery from "react-grid-gallery"
+import SliderBase from "react-awesome-slider"
+import AwsSliderStyles from "react-awesome-slider/src/styles"
 
 const Container = styled.div`
   background: black;
   width: 100%;
-  height: 100%;
-  overflow-y: auto;
   top: 0;
   z-index: 3;
   padding-top: 40px;
   box-sizing: border-box;
 `
 
-// images comes in from data as [ "url1", "url2" ]
-// should be transformed to [ {src, thumbnail, thumbnailWidth, thumbnailHeight } ]
+const Slider = styled(SliderBase)`
+  & > nav > button {
+    background: white;
+    width: 12px;
+    height: 12px;
+
+    &[class*="active"] {
+      background: white !important;
+      width: 14px !important;
+      height: 14px !important;
+    }
+  }
+
+  & > * {
+    & span:before,
+    & span:after {
+      background: white !important;
+    }
+  }
+
+  :root {
+    --loader-bar-color: white !important;
+  }
+`
 
 export default function Gallery(props) {
-  const { images } = props
+  const { media } = props
 
-  const [formatted, setFormatted] = useState([])
-
-  useEffect(() => {
-    const loadImages = async () => {
-      const loadAllImages = images.map(
-        src =>
-          new Promise(resolve => {
-            resolve(loadImage(src))
-          })
-      )
-      const loadedImages = await Promise.all(loadAllImages)
-      const formattedImages = loadedImages.map(formatImage)
-      setFormatted(formattedImages)
-    }
-
-    if (formatted.length === 0) {
-      loadImages()
-    }
-  }, [formatted, images, window.innerWidth])
+  const sliderRef = useRef()
 
   return (
-    <Container>
-      {formatted.length > 0 ? (
-        <GridGallery
-          images={formatted}
-          enableImageSelection={false}
-          rowHeight={350}
-          backdropClosesModal
-        />
-      ) : (
-        <p>Loading...</p>
-      )}
+    <Container cssModule={AwsSliderStyles}>
+      <Slider ref={sliderRef} onAnimationStart={pauseAllVideos}>
+        {media.map(src => (
+          <div data-src={src} />
+        ))}
+      </Slider>
     </Container>
   )
 }
 
-function loadImage(src) {
-  return new Promise((resolve, reject) => {
-    const img = new Image()
-    img.addEventListener("load", () => resolve(img))
-    img.addEventListener("error", err => reject(err))
-    img.src = src
-  })
+const pauseAllVideos = ({
+  element,
+  currentIndex,
+  nextIndex,
+  currentScreen,
+  nextScreen
+}) => {
+  console.log(element)
 }
-
-const formatImage = img => ({
-  src: img.src,
-  thumbnail: img.src,
-  thumbnailHeight: img.height,
-  thumbnailWidth: img.width
-})
