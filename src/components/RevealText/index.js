@@ -162,7 +162,7 @@ const Subtitle = styled.span`
 `
 
 export default function RevealText(props) {
-  const { title = "...", subtitle = "...", color, show } = props
+  const { title = "...", subtitle = "...", color } = props
 
   return (
     <Text color={color}>

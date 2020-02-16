@@ -21,7 +21,7 @@ export default function VerticalActiveSlice(props) {
   const pos = i / (data.length - 1)
 
   const [wrapperPos, setWrapperPos] = useSpring(() => ({
-    wh: [WIDTH, HEIGHT / data.length],
+    wh: [WIDTH, (HEIGHT * 3) / data.length],
     yrXz: [0, 0, 0],
     config: { mass: 2, tension: 400, friction: 60 }
   }))
@@ -62,10 +62,10 @@ const interpolateWrapperStyle = (wrapperPos, props) => {
     (y, rx, z) =>
       "translateX(-50%)" +
       `translateY(-${pos * 100}%)` +
-      "scale(1.03)" +
-      "translateZ(-20px)" +
-      `translate3d(0, ${y}px, ${z}px)` +
-      `rotateX(${rx}deg)`
+      "scale(1.03)" + // fill in gaps between slices
+      "translateZ(-20px)" + // start 20px away, for effect i guess? idk
+      `translate3d(0, ${y}px, ${z}px)` + // zoom
+      `rotateX(${rx}deg)` // skrt
   )
   wrapperStyle.width = active ? WIDTH * 1.05 : WIDTH
   wrapperStyle.height = active

@@ -28,7 +28,7 @@ export function useGesture(dims, numSlices, activeIndex, setActiveIndex) {
   const dragBind = useDrag(payload => handleDrag(payload))
 
   const handleMove = useCallback(
-    ({ movement: [mx, my], xy: [x, y] }) => {
+    ({ xy: [x, y] }) => {
       const inCarouselBounds = isInBounds(x, y, dims)
 
       if (!inCarouselBounds) {
@@ -43,7 +43,7 @@ export function useGesture(dims, numSlices, activeIndex, setActiveIndex) {
   const moveBind = useMove(payload => handleMove(payload))
 
   const handleClick = useCallback(
-    ({ clientX: x, clientY: y, target }) => {
+    ({ clientX: x, clientY: y }) => {
       const inCarouselBounds = isInBounds(x, y, dims)
 
       if (!inCarouselBounds) {

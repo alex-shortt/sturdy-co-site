@@ -36,7 +36,7 @@ export default function Carousel(props) {
       setDims(getSlicesDims())
       window.addEventListener("resize", () => setDims(getSlicesDims()))
     }
-  }, [data, dims, id])
+  }, [data, dims])
 
   const { dragBind, moveBind, onClick } = useGesture(
     dims,
