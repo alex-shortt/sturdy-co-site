@@ -25,6 +25,14 @@ const Logo = styled.img.attrs({ src: sturdyImg })`
   object-fit: contain;
   position: absolute;
   top: 60px;
+
+  @media screen and (max-width: 750px) {
+    height: 60px;
+  }
+
+  @media screen and (max-width: 575px) {
+    height: 50px;
+  }
 `
 
 const Footer = styled(FooterBase)`

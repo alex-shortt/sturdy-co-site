@@ -90,10 +90,10 @@ export default function Carousel(props) {
 const getSlicesDims = () => {
   const ratio = 5 / 16
   const windowWidth = window.innerWidth
-  const width = Math.min(window.innerWidth * 0.7, 900)
+  const width = Math.min(window.innerWidth * 0.65, 900)
 
   if (windowWidth < 750) {
-    const height = window.innerHeight - 75 - 55 - 135 - 60 // logo, header, footer, padding
+    const height = window.innerHeight - 70 - 50 - 100 - 60 // logo, header, footer, padding
     return {
       width: Math.min(width, (height * ratio * 3) / 2),
       height,

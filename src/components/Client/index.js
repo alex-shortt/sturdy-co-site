@@ -60,7 +60,7 @@ const Subtitle = styled.p`
   }
 `
 
-const Credits = styled.h3`
+const CreditsContainer = styled.h3`
   color: gray;
   font-weight: 100;
   line-height: 1.2;
@@ -97,6 +97,25 @@ const Logo = styled.img.attrs({ src: sturdyImg })`
   }
 `
 
+function Credits(props) {
+  const { credits } = props
+
+  if (!credits) {
+    return <></>
+  }
+
+  return (
+    <CreditsContainer>
+      {credits.split("\n").map(cred => (
+        <React.Fragment key={cred}>
+          {cred}
+          <br />
+        </React.Fragment>
+      ))}
+    </CreditsContainer>
+  )
+}
+
 export default function Client(props) {
   const { id, data, ...restProps } = props
 
@@ -123,14 +142,7 @@ export default function Client(props) {
             <Info>
               <Title>{title}</Title>
               <Subtitle>{subtitle}</Subtitle>
-              <Credits>
-                {credits.split("\n").map(cred => (
-                  <React.Fragment key={cred}>
-                    {cred}
-                    <br />
-                  </React.Fragment>
-                ))}
-              </Credits>
+              <Credits credits={credits} />
             </Info>
             <Logo />
           </TopBox>

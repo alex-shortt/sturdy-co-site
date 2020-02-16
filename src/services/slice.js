@@ -40,7 +40,7 @@ export const calcHorizontalWrapperPos = props => {
       (i < activeIndex ? -1 : 1)
 
     // move in 3d
-    newWrapperPos.xrYz[2] += MAX_DEPTH * ((-dist * (WIDTH / 800)) / maxDist + 1)
+    newWrapperPos.xrYz[2] += MAX_DEPTH * ((-dist * (WIDTH / 740)) / maxDist + 1)
 
     // give breathing room on edges
     newWrapperPos.xrYz[2] += Math.abs(activePos - 0.5) * -HEIGHT
@@ -75,7 +75,8 @@ export const calcVerticalWrapperPos = props => {
     newWrapperPos.yrXz[2] = MAX_DEPTH + 30
 
     // move away from edge
-    newWrapperPos.yrXz[0] += (((activePos - 0.5) / 0.5) * -HEIGHT) / data.length
+    newWrapperPos.yrXz[0] +=
+      ((activePos - 0.5) / 0.5) * ((-HEIGHT * 3) / data.length)
   } else if (activeIndex !== null) {
     // line up slices for when it rotates
     const wPrime = newWrapperPos.wh[1] * Math.cos((THETA * Math.PI) / 180)
@@ -86,11 +87,12 @@ export const calcVerticalWrapperPos = props => {
     // push to edges of active slice
     newWrapperPos.yrXz[0] += (HEIGHT / data.length) * (i < activeIndex ? -1 : 1)
     // line up first slice with middle of active slice
-    newWrapperPos.yrXz[0] += (activePos - 0.5) * ((-HEIGHT * 4) / data.length)
+    newWrapperPos.yrXz[0] +=
+      ((activePos - 0.5) / 0.5) * ((-HEIGHT * 3) / data.length)
 
     // move in 3d, use   G O D  C O N S T A N T
     newWrapperPos.yrXz[2] +=
-      MAX_DEPTH * ((-dist * (HEIGHT / 650)) / maxDist + 1)
+      MAX_DEPTH * ((-dist * (HEIGHT / 580)) / maxDist + 1)
     // give breathing room for edges clipping
     newWrapperPos.yrXz[2] += Math.abs(activePos - 0.5) * -WIDTH
 
