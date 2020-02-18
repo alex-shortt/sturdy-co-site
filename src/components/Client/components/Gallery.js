@@ -35,6 +35,12 @@ const Slider = styled(SliderBase)`
   :root {
     --loader-bar-color: white !important;
   }
+
+  .awssld__content > img,
+  .awssld__content > video {
+    object-fit: contain;
+    background: black;
+  }
 `
 
 export default function Gallery(props) {
