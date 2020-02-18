@@ -1,4 +1,4 @@
-import React, { useRef } from "react"
+import React from "react"
 import styled from "styled-components/macro"
 import SliderBase from "react-awesome-slider"
 import AwsSliderStyles from "react-awesome-slider/src/styles"
@@ -41,30 +41,23 @@ const Slider = styled(SliderBase)`
     object-fit: contain;
     background: black;
   }
+
+  .awssld__bullets {
+    flex-wrap: wrap;
+    bottom: auto;
+  }
 `
 
 export default function Gallery(props) {
   const { media } = props
 
-  const sliderRef = useRef()
-
   return (
     <Container cssModule={AwsSliderStyles}>
-      <Slider ref={sliderRef} onAnimationStart={pauseAllVideos}>
+      <Slider>
         {media.map(src => (
           <div data-src={src} />
         ))}
       </Slider>
     </Container>
   )
-}
-
-const pauseAllVideos = ({
-  element,
-  currentIndex,
-  nextIndex,
-  currentScreen,
-  nextScreen
-}) => {
-  console.log(element)
 }
