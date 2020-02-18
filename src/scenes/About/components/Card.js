@@ -10,6 +10,8 @@ const Container = styled.div`
   min-width: calc(50% - 40px);
   max-width: 100%;
   box-sizing: border-box;
+  position: relative;
+  background: rgba(0, 0, 0, 0.86);
 `
 
 export default function Card(props) {
