@@ -45,6 +45,7 @@ const Slider = styled(SliderBase)`
   .awssld__bullets {
     flex-wrap: wrap;
     bottom: auto;
+    margin-top: 8px;
   }
 `
 
