@@ -2,8 +2,8 @@ import React from "react"
 import styled from "styled-components/macro"
 
 import Carousel from "components/Carousel"
-import sturdyImg from "assets/images/logo.png"
 import FooterBase from "components/Footer"
+import LiveLogo from "components/LiveLogo"
 
 const Container = styled.div`
   max-width: 1400px;
@@ -19,22 +19,6 @@ const Container = styled.div`
   align-items: center;
 `
 
-const Logo = styled.img.attrs({ src: sturdyImg })`
-  height: calc(50px + 5vw);
-  width: 100%;
-  object-fit: contain;
-  position: absolute;
-  top: 60px;
-
-  @media screen and (max-width: 750px) {
-    height: 60px;
-  }
-
-  @media screen and (max-width: 575px) {
-    height: 50px;
-  }
-`
-
 const Footer = styled(FooterBase)`
   position: absolute;
   bottom: 0;
@@ -45,7 +29,7 @@ export default function Home(props) {
 
   return (
     <Container {...restProps}>
-      <Logo />
+      <LiveLogo />
       <Carousel data={data} id={id} {...restProps} />
       <Footer />
     </Container>
